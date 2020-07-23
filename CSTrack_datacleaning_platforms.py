@@ -52,6 +52,7 @@ class Datacleaning:
         else:
             #3: if it is not, update log error to inform that the number of projects loaded is lower than the stored in the previous execution 
             self.log_error.insert_one({"Error type": "Number of projects link from platform loaded in projects_pla_list", "Id": Id, "Error": "The project with Id " + str(Id) + " has loaded only " + str(num_stored) + " check the URL: " + Url , "date_update": str(date.today())})
+            
 
     def check_links (self, Id, Name, Url, country, wp2_id):
 
@@ -153,7 +154,7 @@ class Datacleaning:
                 #If is a correct value insert
                 self.insert_information(Id, Name, Url, country, wp2_id)
     
-    def insert_information(self, Id, Name, Url, country):
+    def insert_information(self, Id, Name, Url, country, wp2_id):
 
         self.CSTrack_platform_projects.insert_one({'Id': Id, 'Url':Url, 'Name': Name, 'Country':country, 'load_date': str(date.today()), 'Wp2 Id': wp2_id }) #insert in mongodb database
 
@@ -176,4 +177,4 @@ class Datacleaning:
                 
 data_cleaning = Datacleaning()
 #data_cleaning.check_num_projects(9, "valores")
-data_cleaning.Datacleaning_platforms(180)
+data_cleaning.Datacleaning_platforms(174)

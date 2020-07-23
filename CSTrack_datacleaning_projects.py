@@ -2,6 +2,7 @@ import time
 from pymongo import MongoClient
 from datetime import date
 
+
 class Datacleaning:
     def __init__(self):
         #Mongodb connection
@@ -61,7 +62,7 @@ class Datacleaning:
     def Check_descriptors(self, Id):
 
         for x in self.STG_projects_pro_list.find({"Plat Id": str(Id)}):
-
+            #print(x)
             name = str(list(x.values())[1])
 
             #Remove null values
@@ -136,11 +137,114 @@ class Datacleaning:
             elif str(Id) == '111':
                 #Remove data
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['Acerca de', 'Ayuda', 'Foro', 'Prensa', 'Nuestro blog', \
-                    'Directrices de la comunidad', 'Términos del servicio', 'Privacidad', \ 
-                    '/Enero/', '/EDT/', '/Febrero/', '/Marzo/', '/Abril/', '/Mayo/', '/Junio/', '/Juloi/', '/Agosto/', '/Septiembre/', '/Octubre/'\
+                    'Directrices de la comunidad', 'Términos del servicio', 'Privacidad', 'Enero', '/EDT/', '/Febrero/', '/Marzo/', '/Abril/', '/Mayo/', '/Junio/', '/Juloi/', '/Agosto/', '/Septiembre/', '/Octubre/'\
                     '/Noviembre/', '/Diciembre/']}}})
 
+            elif str(Id) == '65':
+                #Move and map category
 
+                Url_elem = self.check_data_cleaning.find({"Id":3})[0]
+                
+                try:
+                    #For each webpage stored, classify information and map text
+                    for i in self.STG_projects_pro_list.find({"TITLE":name}, {"WEB":1, "_id":0})[0].get("WEB") :                 
+
+                        #Topics, if contins "topic"
+                        if 'topic' in i :
+                            for item in Url_elem['Topics'] : 
+                                #Check if the webpage is in list of topics: CSTrack_check_data_cleaning
+                                if item['Url'] == i :
+                                    #Remove webpage
+                                    self.STG_projects_pro_list.update_one({"TITLE":name},{"$pull":{"WEB":i}})
+                                    #Add new descriptor
+                                    self.STG_projects_pro_list.update_one({"TITLE":name},{"$addToSet":{ "TOPICS": item['Description']}})
+
+                        #Age group, if contins "audience"
+                        elif 'audience' in i :
+                            for item in Url_elem['Age group'] : 
+                                #Check if the webpage is in list of topics: CSTrack_check_data_cleaning
+                                if item['Url'] == i :
+                                    #Remove webpage
+                                    self.STG_projects_pro_list.update_one({"TITLE":name},{"$pull":{"WEB":i}})
+                                    #Add new descriptor
+                                    self.STG_projects_pro_list.update_one({"TITLE":name},{"$addToSet":{ "MEMBER AGE": item['Description']}})
+                        
+                        #Development time, if contins "activity"
+                        elif 'activity' in i :
+                            for item in Url_elem['Development time'] : 
+                                #Check if the webpage is in list of topics: CSTrack_check_data_cleaning
+                                if item['Url'] == i :
+                                    #Remove webpage
+                                    self.STG_projects_pro_list.update_one({"TITLE":name},{"$pull":{"WEB":i}})
+                                    #Add new descriptor
+                                    self.STG_projects_pro_list.update_one({"TITLE":name},{"$addToSet":{ "DEVELOPMENT TIME": item['Description']}})
+                        
+                        elif 'phrase' in i :
+                            #Remove webpage
+                            self.STG_projects_pro_list.update_one({"TITLE":name},{"$pull":{"WEB":i}})
+                            #Add new descriptor
+                            self.STG_projects_pro_list.update_one({"TITLE":name},{"$addToSet":{ "TOPICS": i.partition('=')[2] }})
+                except:
+                    pass
+
+                #Remove data
+                self.STG_projects_pro_list.update_one({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['more', 'Loading map...', 'View map...', 'Then…']}}})
+                    #contains
+                self.STG_projects_pro_list.update_one({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex": 'DESCRIPTION '}}})
+                self.STG_projects_pro_list.update_one({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex": ' on Twitter'}}})
+                self.STG_projects_pro_list.update_one({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex": ' on Facebook'}}})
+
+                #Tools and materials move to descriptor
+                try:
+                    for i in self.STG_projects_pro_list.find({"TITLE":name}, {"DESCRIPTION":1, "_id":0})[0].get("DESCRIPTION") :                 
+                        
+                        if "MATERIALS" in i:
+                            self.STG_projects_pro_list.update_one({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":"MATERIALS"}}})
+                            self.STG_projects_pro_list.update_one({"TITLE":name},{"$addToSet":{ "TOOLS AND MATERIALS": i }})
+
+                        #Social media move to descriptor                   
+                        elif "SOCIAL MEDIA" in i:
+                            self.STG_projects_pro_list.update_one({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":"SOCIAL MEDIA"}}})
+                            self.STG_projects_pro_list.update_one({"TITLE":name},{"$addToSet":{ "SOCIAL MEDIA": i }})
+
+                        #Participants profile move to descriptor
+                        elif "SPECIAL SKILLS" in i:
+                            self.STG_projects_pro_list.update_one({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":"SPECIAL SKILLS"}}})
+                            self.STG_projects_pro_list.update_one({"TITLE":name},{"$addToSet":{ "PARTICIPANTS PROFILE": i }})
+
+                        #Web move to descriptor
+                        elif "WEB" in i:
+                            self.STG_projects_pro_list.update_one({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":"WEB"}}})
+                            self.STG_projects_pro_list.update_one({"TITLE":name},{"$addToSet":{ "WEB": i }})
+
+                        #Activity type move to descriptor
+                        elif "TYPE OF ACTIVITY" in i:
+                            self.STG_projects_pro_list.update_one({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":"TYPE OF ACTIVITY"}}})
+                            self.STG_projects_pro_list.update_one({"TITLE":name},{"$addToSet":{ "ACTIVITY TYPE": i }})
+
+                        #Topics move to descriptor
+                        elif "TAGS" in i:
+                            self.STG_projects_pro_list.update_one({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":"TAGS"}}})
+                            self.STG_projects_pro_list.update_one({"TITLE":name},{"$addToSet":{ "TOPICS": i }})
+                    
+                        #Publications to descriptor
+                        elif "MEDIA MENTIONS & PUBLICATIONS" in i or "RESOURCES " in i:
+                            self.STG_projects_pro_list.update_one({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":"MEDIA MENTIONS & PUBLICATIONS"}}})
+                            self.STG_projects_pro_list.update_one({"TITLE":name},{"$addToSet":{ "RESOURCES": i }})
+
+                        #Metodology move to descriptor
+                        elif "METHODOLOGY" in i:
+                            self.STG_projects_pro_list.update_one({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":"HOW TO GET STARTED"}}})
+                            self.STG_projects_pro_list.update_one({"TITLE":name},{"$addToSet":{ "METHODOLOGY": i }})
+
+                        #Metodology move to descriptor
+                        elif " APP " in i:
+                            self.STG_projects_pro_list.update_one({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":" APP "}}})
+                            self.STG_projects_pro_list.update_one({"TITLE":name},{"$addToSet":{ "APPS": i }})
+
+                except:
+                    pass
+                
     def STG_insert_all(self, Id):
 
         for x in self.collection_proj.find({"Plat Id": str(Id)}):
@@ -177,6 +281,9 @@ class Datacleaning:
                         for j in range(0, len(list(x.values())[i])) :
                             #Read all the information of each descriptor (array) and check if exist. If not, insert.
                             self.CSTrack_projects_descriptors.update({"TITLE":name},{"$addToSet":{str(list(x)[i]):str(list(x.values())[i][j])}})
+                        
+                        self.CSTrack_projects_descriptors.update({"TITLE":name},{"$addToSet":{"Date update":str(date.today())}})
+                        
                     except:
                         pass
                 
@@ -191,6 +298,7 @@ class Datacleaning:
             Name = list(x.values())[3]'''
             wp2_id = int(self.collection_pla.find({"Id":Id})[0].get("Wp2 Id"))
 
+            
             #if is informed as to be loaded
             if str(self.collection_pla.find({"Id":Id})[0].get("Load")) == 'yes':
                 #check the number of projects and if it is a correct value. Insert it if all correct
@@ -210,4 +318,4 @@ class Datacleaning:
                 
 data_cleaning = Datacleaning()
 #data_cleaning.check_num_projects(9, "valores")
-data_cleaning.Datacleaning_projects(184)
+data_cleaning.Datacleaning_projects(65)

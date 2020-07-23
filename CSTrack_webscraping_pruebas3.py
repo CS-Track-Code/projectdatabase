@@ -28,9 +28,10 @@ class Scraper:
         self.CSTrack_config = db.CSTrack_config  #Projects information
 
         self.CSTrack_platforms_projects = db.CSTrack_platforms_projects
+        self.log_error = db.CSTrack_logerror #Store error for datacleaning
 
 
-    def get_driver(self, platformUrl):
+    def get_driver(self, platformUrl, Id):
         #Selenium library read: Chromedriver route
         route = 'D:/Users/Miriam/Anaconda3/Lib/site-packages/selenium/webdriver/common/chromedriver.exe'
         
@@ -39,6 +40,13 @@ class Scraper:
         
         #Get driver Url platform
         self.driver.get(platformUrl)
+
+        if str(platformUrl) != str(self.driver.current_url):
+            New_Url = str(self.driver.current_url)+"?tab=about"
+            print(New_Url)
+            #self.driver.close()
+            #Get new driver Url platform
+            self.driver.get(New_Url)
 
 
     def get_request(self, platformUrl):
@@ -138,7 +146,7 @@ class Scraper:
         last = 0
 
         #Call def get_driver
-        self.get_driver(platformUrl)
+        self.get_driver(platformUrl, Id)
        
         if buttonName:       
             self.button = buttonName
@@ -256,13 +264,14 @@ class Scraper:
         self.objectives = ['MAIN OBJECTIVES']  #Add objectives to the list
         self.ages = ['MEMBER AGE']  #Add ages to the list
         self.space = ['DEVELOPMENT SPACE'] #Add space to the list
-        self.duration = ['DEDICATION TIME']  #Add duration to the list
+        self.duration = ['DURATION']  #Add duration to the list
         self.update_date = ['PLATFORM UPDATE DATE'] #Add update_date to the list
         self.dedication = ['DEDICATION TIME']  #Add dedication to the list
         self.main = ['MAIN PROGRAM OR PERSON IN CHARGE']  #Add main program to the list
         self.participants = ['PARTICIPANTS PROFILE'] #Add profile to the list
         self.tools = ['TOOLS AND MATERIALS'] #Add tools & materials to the list
-
+        self.num_members = ['NUMBER OF MEMBERS'] #Add number of members to the list
+        self.end_date = ['END DATE'] #Add end date to the list
 
         #check if social media values are in this list
         self.social_media_values = self.CSTrack_config.find({ "Id": 6 })[0]
@@ -302,8 +311,12 @@ class Scraper:
         self.participants_profile_values = self.CSTrack_config.find({ "Id": 29 })[0] 
         #check if tools values are in this list
         self.tools_values = self.CSTrack_config.find({ "Id": 19 })[0] 
-
-
+        #check if number of members values are in this list
+        self.num_members_values = self.CSTrack_config.find({ "Id": 24 })[0] 
+        #check if end date values are in this list
+        self.end_date_values = self.CSTrack_config.find({ "Id": 22 })[0] 
+        #check if web values are in this list
+        self.web_values = self.CSTrack_config.find({ "Id": 5 })[0]
 
     def projects_descriptors(self, Id, projectUrl, Name, Plat_country, className):
 
@@ -365,7 +378,30 @@ class Scraper:
             # Tag "p" - description + others
             self.get_items(className, "class")
 
-        
+        elif int(Id) == 174:
+            
+            self.get_items(className, 'div')
+            
+            text_list = self.items[0].text.split('\n')
+            description = ''
+
+            for i in text_list:
+                #For all the values in a list, find all the titles (upper case) and description (lower case)
+                if i.isupper() :
+                    if description :
+                        text = text + ' ' + description
+                        self.checkDescriptors(text)
+                        description = ''
+                        text = i
+                    else:
+                        text = i
+                else:
+                    if description:
+                        description = description + ' , ' + i
+                    else:
+                        description = i
+
+            
         else:
             
             # Tag "p" - description + others
@@ -387,7 +423,7 @@ class Scraper:
                 
                 else:                      
                     for item in self.items:
-                        self.checkDescriptors(item.text)
+                        self.checkDescriptors(item.text.replace('\n', ' '))
                 
             except:
                 pass
@@ -397,7 +433,7 @@ class Scraper:
             self.get_items(className, "tr")
 
             try:
-                for item in self.items:
+                for item in self.items: 
                     self.checkDescriptors(item.text.replace('\n', ' ') )
             except:
                 pass
@@ -426,14 +462,17 @@ class Scraper:
                 for item in self.items:
                     if item.text and item.text not in self.title[0:] :    #if tittle is informed and is not in project list                        
                         self.title.append(item.text)
+                        print(item.text)
             else: #If empty h1 then check h2
                 self.get_items(className, "h2")
                 if self.items:  #If not empty
                     for item in self.items:
                         if item.text and item.text not in self.title[0:] :    #if tittle is informed and is not in project list                        
                             self.title.append(item.text)
+                            print(item.text)
                 else:   #If empty get Project Name from platform extraction
                     self.title.append(Name)
+                    print(Name)
         except:
             self.title.append(Name)
 
@@ -560,6 +599,15 @@ class Scraper:
             elif any(ele in value for ele in self.tools_values['values']):
                 if value not in self.tools[0:]:    
                     self.tools.append(value)
+            elif any(ele in value for ele in self.num_members_values['values']):
+                if value not in self.num_members[0:]:    
+                    self.num_members.append(value)
+            elif any(ele in value for ele in self.end_date_values['values']):
+                if value not in self.end_date[0:]:    
+                    self.end_date.append(value)
+            elif any(ele in value for ele in self.web_values['values']):
+                if value not in self.web[0:]:    
+                    self.web.append(value)
             else:
                 self.description.append(value)
 
@@ -573,45 +621,54 @@ class Scraper:
         tuple(self.app), tuple(self.images), tuple(self.resources), tuple(self.geo), tuple(self.status), tuple(self.methodology), 
         tuple(self.start_date), tuple(self.investment), tuple(self.topic), tuple(self.time), tuple(self.ages), tuple(self.dedication) ,
         tuple(self.space), tuple(self.update_date), tuple(self.Url_platform), tuple(self.main), tuple(self.participants), tuple(self.objectives),
-        tuple(self.tools)]
+        tuple(self.tools), tuple(self.num_members), tuple(self.end_date)]
 
+        #Check if tittle is ¡Eso no existe!
+        if self.title[1] == "¡Eso no existe!" or "Se ha interrumpido la conexión" in self.title[1]:
+            self.check_errors()
+        else:
+            print(self.dictionary)
 
-        print(self.dictionary)
+            self.desc_dict = {}
+            self.lista = self.dictionary[0]
 
-        self.desc_dict = {}
-        self.lista = self.dictionary[0]
-
-        #Check if is in dictionary
-        if self.collection_proj.find({ "TITLE": self.lista[1] }).count() != 0: #IS IN DICTIONARY
-                
-            self.update_descriptors()
-        
-        #If not, create dictionary
-        else:   
-            #REVISAR EL APPEND DE LA WEBS SI HAY MAS DE UNO
-            for i in range(0, len(self.dictionary)):  #For each value in list moving 2 steps for each loop
-                
-                #Get all the lists defined in dictionary
-                self.lista = self.dictionary[i]
-                
-                try:
-                    #If length is > 2 then there is a title and a list of values
-                    if i != 0 and i != 5 and i != 6 and i != 7 and i != 22:
-                        if len(self.lista[1:len(self.lista)])>0:   #if not empty
-                            self.desc_dict[self.lista[0]] = self.lista[1:len(self.lista)]
-                    else:
-                        #If length is = 2 then there is a title and only one value
-                        if len(str(self.lista[1]))>0:  #if not empty
-                            self.desc_dict[self.lista[0]] = str(self.lista[1])
-                except:
-                    pass
+            #Check if is in dictionary
+            if self.collection_proj.find({ "TITLE": self.lista[1] }).count() != 0: #IS IN DICTIONARY
+                    
+                self.update_descriptors()
             
-            #Insert new
-            self.insert_descriptors()
+            #If not, create dictionary
+            else:   
+                #REVISAR EL APPEND DE LA WEBS SI HAY MAS DE UNO
+                for i in range(0, len(self.dictionary)):  #For each value in list moving 2 steps for each loop
+                    
+                    #Get all the lists defined in dictionary
+                    self.lista = self.dictionary[i]
+                    
+                    try:
+                        #If length is > 2 then there is a title and a list of values
+                        if i != 0 and i != 5 and i != 6 and i != 7 and i != 22:
+                            if len(self.lista[1:len(self.lista)])>0:   #if not empty
+                                self.desc_dict[self.lista[0]] = self.lista[1:len(self.lista)]
+                        else:
+                            #If length is = 2 then there is a title and only one value
+                            if len(str(self.lista[1]))>0:  #if not empty
+                                self.desc_dict[self.lista[0]] = str(self.lista[1])
+                    except:
+                        pass
+                
+                #Insert new
+                self.insert_descriptors()
 
     def insert_descriptors(self):
         #The dictionary is not in the database, insert all new
         self.collection_proj.insert_one(self.desc_dict)
+
+    def check_errors(self):
+        # Update log error to inform that the project does not exist 
+        self.log_error.insert_one({"Error type": "Project does not exist", "Id": str(self.Id_plat[1]), "Error": "Check the URL: " + str(self.Url_platform[1]) , "date_update": str(date.today())})
+        self.CSTrack_platforms_projects.remove({"Url":str(self.Url_platform[1])})
+        self.collection.remove({"Url":str(self.Url_platform[1])})
         
     def update_descriptors(self):
         #The dictionary is in databse (checked the title), then, update values
@@ -632,7 +689,7 @@ class Scraper:
             value = self.mail[i]
  
             if self.collection_proj.find({ "$and" : [ { "TITLE": str(self.lista[1])}, { "MAIL": value } ]}).count() == 0:
-                self.collection_proj.update( { "TITLE": str(self.lista[1])},  { "$push": { "MAIL": value} })
+                self.collection_proj.update( { "TITLE": str(self.lista[1])},  { "$push": { "MAIL": value} })  
 
         #DESCRIPTION        
         for i in range(1,len(self.description)):
@@ -651,11 +708,172 @@ class Scraper:
                 self.collection_proj.update( { "TITLE": str(self.lista[1])},  { "$push": { "SOCIAL MEDIA": value} })
     
         #PLATFORM ORIGIN Url        
-            print(self.Url_platform)
-            value = self.Url_platform
 
-            if self.collection_proj.find({ "$and" : [ { "TITLE": str(self.lista[1])}, { "Url platform": value } ]}).count() == 0:
-                self.collection_proj.update( { "TITLE": str(self.lista[1])},  { "$set": { "Url platform": value} })
+        value = self.Url_platform
+
+        if self.collection_proj.find({ "$and" : [ { "TITLE": str(self.lista[1])}, { "Url platform": value } ]}).count() == 0:
+            self.collection_proj.update( { "TITLE": str(self.lista[1])},  { "$set": { "Url platform": value} })
+
+        #APPS       
+        for i in range(1,len(self.app)):
+
+            value = self.app[i]
+
+            if self.collection_proj.find({ "$and" : [ { "TITLE": str(self.lista[1])}, { "APPS": value } ]}).count() == 0:
+                self.collection_proj.update( { "TITLE": str(self.lista[1])},  { "$push": { "APPS": value} })
+
+        #IMAGES        
+        for i in range(1,len(self.images)):
+
+            value = self.images[i]
+
+            if self.collection_proj.find({ "$and" : [ { "TITLE": str(self.lista[1])}, { "IMAGES": value } ]}).count() == 0:
+                self.collection_proj.update( { "TITLE": str(self.lista[1])},  { "$push": { "IMAGES": value} })
+        
+        #RESOURCES        
+        for i in range(1,len(self.resources)):
+
+            value = self.resources[i]
+
+            if self.collection_proj.find({ "$and" : [ { "TITLE": str(self.lista[1])}, { "RESOURCES": value } ]}).count() == 0:
+                self.collection_proj.update( { "TITLE": str(self.lista[1])},  { "$push": { "RESOURCES": value} })
+        
+        #GEOGRAPHICAL LOCATION        
+        for i in range(1,len(self.geo)):
+
+            value = self.geo[i]
+
+            if self.collection_proj.find({ "$and" : [ { "TITLE": str(self.lista[1])}, { "GEOGRAPHICAL LOCATION": value } ]}).count() == 0:
+                self.collection_proj.update( { "TITLE": str(self.lista[1])},  { "$push": { "GEOGRAPHICAL LOCATION": value} })
+        
+        #STATUS        
+        for i in range(1,len(self.status)):
+
+            value = self.status[i]
+
+            if self.collection_proj.find({ "$and" : [ { "TITLE": str(self.lista[1])}, { "STATUS": value } ]}).count() == 0:
+                self.collection_proj.update( { "TITLE": str(self.lista[1])},  { "$push": { "STATUS": value} })
+
+        #METHODOLOGY        
+        for i in range(1,len(self.methodology)):
+
+            value = self.methodology[i]
+
+            if self.collection_proj.find({ "$and" : [ { "TITLE": str(self.lista[1])}, { "METHODOLOGY": value } ]}).count() == 0:
+                self.collection_proj.update( { "TITLE": str(self.lista[1])},  { "$push": { "METHODOLOGY": value} })
+        
+        #START DATE        
+        for i in range(1,len(self.start_date)):
+
+            value = self.start_date[i]
+
+            if self.collection_proj.find({ "$and" : [ { "TITLE": str(self.lista[1])}, { "START DATE": value } ]}).count() == 0:
+                self.collection_proj.update( { "TITLE": str(self.lista[1])},  { "$push": { "START DATE": value} })
+
+        #INVESTMENT        
+        for i in range(1,len(self.investment)):
+
+            value = self.investment[i]
+
+            if self.collection_proj.find({ "$and" : [ { "TITLE": str(self.lista[1])}, { "INVESTMENT": value } ]}).count() == 0:
+                self.collection_proj.update( { "TITLE": str(self.lista[1])},  { "$push": { "INVESTMENT": value} })
+        
+        #TOPICS        
+        for i in range(1,len(self.topic)):
+
+            value = self.topic[i]
+
+            if self.collection_proj.find({ "$and" : [ { "TITLE": str(self.lista[1])}, { "TOPICS": value } ]}).count() == 0:
+                self.collection_proj.update( { "TITLE": str(self.lista[1])},  { "$push": { "TOPICS": value} })
+
+        #DEVELOPMENT TIME        
+        for i in range(1,len(self.time)):
+
+            value = self.time[i]
+
+            if self.collection_proj.find({ "$and" : [ { "TITLE": str(self.lista[1])}, { "DEVELOPMENT TIME": value } ]}).count() == 0:
+                self.collection_proj.update( { "TITLE": str(self.lista[1])},  { "$push": { "DEVELOPMENT TIME": value} })
+
+        #MAIN OBJECTIVES        
+        for i in range(1,len(self.objectives)):
+
+            value = self.objectives[i]
+
+            if self.collection_proj.find({ "$and" : [ { "TITLE": str(self.lista[1])}, { "MAIN OBJECTIVES": value } ]}).count() == 0:
+                self.collection_proj.update( { "TITLE": str(self.lista[1])},  { "$push": { "MAIN OBJECTIVES": value} })
+        
+        #MEMBER AGE     
+        for i in range(1,len(self.ages)):
+
+            value = self.ages[i]
+
+            if self.collection_proj.find({ "$and" : [ { "TITLE": str(self.lista[1])}, { "MEMBER AGE": value } ]}).count() == 0:
+                self.collection_proj.update( { "TITLE": str(self.lista[1])},  { "$push": { "MEMBER AGE": value} })
+
+
+        #SPACE        
+        for i in range(1,len(self.space)):
+
+            value = self.space[i]
+
+            if self.collection_proj.find({ "$and" : [ { "TITLE": str(self.lista[1])}, { "DEVELOPMENT SPACE": value } ]}).count() == 0:
+                self.collection_proj.update( { "TITLE": str(self.lista[1])},  { "$push": { "DEVELOPMENT SPACE": value} })
+
+        #DEDICATION TIME        
+        for i in range(1,len(self.duration)):
+
+            value = self.duration[i]
+
+            if self.collection_proj.find({ "$and" : [ { "TITLE": str(self.lista[1])}, { "DEDICATION TIME": value } ]}).count() == 0:
+                self.collection_proj.update( { "TITLE": str(self.lista[1])},  { "$push": { "DEDICATION TIME": value} })
+        
+        #UPDATE DATE     
+        for i in range(1,len(self.update_date)):
+
+            value = self.update_date[i]
+
+            if self.collection_proj.find({ "$and" : [ { "TITLE": str(self.lista[1])}, { "PLATFORM UPDATE DATE": value } ]}).count() == 0:
+                self.collection_proj.update( { "TITLE": str(self.lista[1])},  { "$push": { "PLATFORM UPDATE DATE": value} })
+
+        #MAIN        
+        for i in range(1,len(self.main)):
+
+            value = self.main[i]
+
+            if self.collection_proj.find({ "$and" : [ { "TITLE": str(self.lista[1])}, { "MAIN PROGRAM OR PERSON IN CHARGE": value } ]}).count() == 0:
+                self.collection_proj.update( { "TITLE": str(self.lista[1])},  { "$push": { "MAIN PROGRAM OR PERSON IN CHARGE": value} })
+        
+        #PARTCIPANTS     
+        for i in range(1,len(self.participants)):
+
+            value = self.participants[i]
+
+            if self.collection_proj.find({ "$and" : [ { "TITLE": str(self.lista[1])}, { "PARTICIPANTS PROFILE": value } ]}).count() == 0:
+                self.collection_proj.update( { "TITLE": str(self.lista[1])},  { "$push": { "PARTICIPANTS PROFILE": value} })
+
+        #TOOLS AND MATERIAL     
+        for i in range(1,len(self.tools)):
+
+            value = self.tools[i]
+
+            if self.collection_proj.find({ "$and" : [ { "TITLE": str(self.lista[1])}, { "TOOLS AND MATERIALS": value } ]}).count() == 0:
+                self.collection_proj.update( { "TITLE": str(self.lista[1])},  { "$push": { "TOOLS AND MATERIALS": value} })
+        
+        #NUMBER OF PARTICIPANTS     
+        for i in range(1,len(self.num_members)):
+
+            value = self.num_members[i]
+
+            if self.collection_proj.find({ "$and" : [ { "TITLE": str(self.lista[1])}, { "NUMBER OF MEMBERS": value } ]}).count() == 0:
+                self.collection_proj.update( { "TITLE": str(self.lista[1])},  { "$push": { "NUMBER OF MEMBERS": value} })
+
+        #END DATE     
+        for i in range(1,len(self.end_date)):
+
+            value = self.end_date[i]
+
+            if self.collection_proj.find({ "$and" : [ { "TITLE": str(self.lista[1])}, { "END DATE": value } ]}).count() == 0:
+                self.collection_proj.update( { "TITLE": str(self.lista[1])},  { "$push": { "END DATE": value} })
 
     def retrieve_projects (self, Id):
 
@@ -678,11 +896,12 @@ class Scraper:
                     
                     if str(Id) == '111':
                         LastUrl = str(Url)+"?tab=about"
+                        print(LastUrl)
                         #Call def get_driver
-                        self.get_driver(LastUrl)
+                        self.get_driver(LastUrl, Id)
                     else:
                         #Call def get_driver
-                        self.get_driver(Url)
+                        self.get_driver(Url, Id)
 
                     #Get ClassName and iterate
                     Class = project.get("ProjClassName")
@@ -738,8 +957,8 @@ scraper = Scraper()
 
 #scraper.get_Cs_Platform(34, 'Jagis pour la nature', 'http://www.vigienature.fr/fr', 'http://www.vigienature.fr', '/fr/','', '','FR')
 #scraper.get_Cs_Platform_Projects(193, 'https://biocollect.ala.org.au/acsa#isCitizenScience%3Dtrue%26isWorldWide%3Dfalse%26max%3D20%26sort%3DdateCreatedSort', '', '/project/','', '//a[@href="javascript:pago.nextPage();"]','AUS')
-scraper.retrieve_projects(65)
-#scraper.retrieve_platforms (184)
+scraper.retrieve_projects(174)
+#scraper.retrieve_platforms (174)
 #scraper.pruebas(111, 'https://www.inaturalist.org/projects/milkweed-madness-monarch-waystation', '"Milkweed Madness" Monarch Waystation', 'World', '')
 
 
