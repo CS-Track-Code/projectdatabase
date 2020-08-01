@@ -177,4 +177,4 @@ class Datacleaning:
                 
 data_cleaning = Datacleaning()
 #data_cleaning.check_num_projects(9, "valores")
-data_cleaning.Datacleaning_platforms(174)
+data_cleaning.Datacleaning_platforms(34)

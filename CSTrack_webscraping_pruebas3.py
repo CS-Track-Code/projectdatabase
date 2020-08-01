@@ -191,6 +191,57 @@ class Scraper:
                             self.insert_Platform_Projects_database(Id, annexed, check, className, country)   
                         else:
                             break
+            
+            elif Id == 37 :
+
+                count =  self.driver.find_elements_by_class_name("ecosystempager")
+                
+                for i in range(2,len(count)):
+
+                    self.driver.close()
+                    
+                    #List of elements
+                    Url = "https://www.open-sciences-participatives.org/ecosysteme-sciences-participatives/?p=" + str(i)
+
+                    #Call def get_driver
+                    self.get_driver(Url, Id)
+                    
+                    #Call def get_elem_by_class: retrieve class html code
+                    self.get_elem(className)
+
+                    #Call def get_elem:retrieve "a" tag
+                    self.get_items(className, "a")
+        
+                    #Call def insert_database: insert data retrieve into database
+                    self.insert_Platform_Projects_database(Id, annexed, check, className, country)                
+                   
+                    #self.button.click()
+                    time.sleep(15)
+            
+            elif Id == 38:
+
+                for i in range(1,8):
+
+                    self.driver.close()
+                    
+                    #List of elements
+                    Url = "https://ldf.lv/en/list_of_projects#qt-projects_archive-ui-tabs" + str(i)
+
+                    #Call def get_driver
+                    self.get_driver(Url, Id)
+                    
+                    #Call def get_elem_by_class: retrieve class html code
+                    self.get_elem(className)
+
+                    #Call def get_elem:retrieve "a" tag
+                    self.get_items(className, "a")
+        
+                    #Call def insert_database: insert data retrieve into database
+                    self.insert_Platform_Projects_database(Id, annexed, check, className, country)                
+                   
+                    #self.button.click()
+                    time.sleep(15)
+           
             else :  
                 #Call def get_elem_by_class: retrieve class html code
                 self.get_elem(className)
@@ -378,6 +429,28 @@ class Scraper:
             # Tag "p" - description + others
             self.get_items(className, "class")
 
+        elif int(Id) == 32:
+            #¡¡¡¡REVISAR ESTO PORQUE NO HAY MANERA!!!!
+            # Tag "p" - description + others
+            self.get_items(className, "br")
+
+            try:
+                for item in self.items: 
+                    self.checkDescriptors(item.text)
+            except:
+                pass 
+
+            # Tag "p" - description + others
+            self.get_items(className, "p")
+            
+            try: 
+            
+                for item in self.items:
+                    self.checkDescriptors(item.text.replace('\n', ' '))
+
+            except:
+                pass
+
         elif int(Id) == 174:
             
             self.get_items(className, 'div')
@@ -400,7 +473,6 @@ class Scraper:
                         description = description + ' , ' + i
                     else:
                         description = i
-
             
         else:
             
@@ -438,6 +510,15 @@ class Scraper:
             except:
                 pass
 
+            # Tag "list" - description + others
+            self.get_items(className, "li")
+
+            try:
+                for item in self.items: 
+                    self.checkDescriptors(item.text.replace('\n', ' ') )
+            except:
+                pass
+
 
             # Tag "span" - description + others
             self.get_items(className, "span")
@@ -455,24 +536,35 @@ class Scraper:
         self.title = []
         self.title.append('TITLE')   #Add tittle 
 
+        
         try:        
-            
-            self.get_items(className, "h1")
-            if self.items: #If not empty
-                for item in self.items:
-                    if item.text and item.text not in self.title[0:] :    #if tittle is informed and is not in project list                        
-                        self.title.append(item.text)
-                        print(item.text)
-            else: #If empty h1 then check h2
-                self.get_items(className, "h2")
-                if self.items:  #If not empty
+            #Special tittle for Id 35
+            if Id == 35:
+
+                self.get_items("", "h1")
+               
+                if self.items: #If not empty
+                    self.title.append(item.text)
+                    print(item.text)
+                
+            else:
+
+                self.get_items(className, "h1")
+                if self.items: #If not empty
                     for item in self.items:
                         if item.text and item.text not in self.title[0:] :    #if tittle is informed and is not in project list                        
                             self.title.append(item.text)
                             print(item.text)
-                else:   #If empty get Project Name from platform extraction
-                    self.title.append(Name)
-                    print(Name)
+                else: #If empty h1 then check h2
+                    self.get_items(className, "h2")
+                    if self.items:  #If not empty
+                        for item in self.items:
+                            if item.text and item.text not in self.title[0:] :    #if tittle is informed and is not in project list                        
+                                self.title.append(item.text)
+                                print(item.text)
+                    else:   #If empty get Project Name from platform extraction
+                        self.title.append(Name)
+                        print(Name)
         except:
             self.title.append(Name)
 
@@ -486,7 +578,7 @@ class Scraper:
 
         #some projects inform TITLE with "Estadísticas del evento"
         if int(Id) == 111:
-            if "Estadísticas del evento" in self.title[1] :
+            if "Estadísticas del evento" in self.title[1] or 'Estadísticas' in self.title[1]:
                 self.title.pop()
                 self.title.append(Name)
 
@@ -878,7 +970,7 @@ class Scraper:
     def retrieve_projects (self, Id):
 
         project =self.collection_pla.find({"Id": Id})[0]
-        
+        print(str(self.collection_pla.find({"Id":Id})[0].get("Load")))
         #CHECK IF WORK
         if str(self.collection_pla.find({"Id":Id})[0].get("Load")) == 'yes':
             for x in self.CSTrack_platforms_projects.find({"Id": Id}):
@@ -901,17 +993,17 @@ class Scraper:
                         self.get_driver(LastUrl, Id)
                     else:
                         #Call def get_driver
-                        self.get_driver(Url, Id)
+                        self.get_driver(Url, Id)                    
 
                     #Get ClassName and iterate
                     Class = project.get("ProjClassName")
-                    
+                        
                     #Get elements and all the information for each descriptor
                     if Class:
                         #Check if a list and iterate, if not, then pass Class element
                         if isinstance(Class, str) :
                             self.projects_descriptors(Id, Url, Name, country, Class)
-                        
+                            
                         else:
                             for i in list(Class):
                                 self.projects_descriptors(Id, Url, Name, country, i)
@@ -955,10 +1047,10 @@ scraper = Scraper()
 #scraper.pruebas('111','https://www.inaturalist.org/projects/intersex-ducks', 'iNaturalista', 'iNaturalista','', 'stracked')
 
 
-#scraper.get_Cs_Platform(34, 'Jagis pour la nature', 'http://www.vigienature.fr/fr', 'http://www.vigienature.fr', '/fr/','', '','FR')
-#scraper.get_Cs_Platform_Projects(193, 'https://biocollect.ala.org.au/acsa#isCitizenScience%3Dtrue%26isWorldWide%3Dfalse%26max%3D20%26sort%3DdateCreatedSort', '', '/project/','', '//a[@href="javascript:pago.nextPage();"]','AUS')
-scraper.retrieve_projects(174)
-#scraper.retrieve_platforms (174)
+#scraper.get_Cs_Platform(34, 'J\'agis pour la nature','https://www.jagispourlanature.org/', '', '/facons-dagir/','', '','FR')
+#scraper.get_Cs_Platform_Projects(34, 'https://www.jagispourlanature.org/', '', '/facons-dagir/','', '','UK')
+scraper.retrieve_projects(111)
+#scraper.retrieve_platforms (34)
 #scraper.pruebas(111, 'https://www.inaturalist.org/projects/milkweed-madness-monarch-waystation', '"Milkweed Madness" Monarch Waystation', 'World', '')
 
 

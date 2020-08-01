@@ -72,7 +72,7 @@ class Datacleaning:
             self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'@'}}})
 
             #Remove *, ',' in description
-            self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['*', ',']}}})
+            self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['*', ',', ' ', '','  ', '   ', '     ', '         ']}}})
 
             #Remove jvascript message in description
             self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'javascript:'}}})
@@ -139,6 +139,87 @@ class Datacleaning:
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['Acerca de', 'Ayuda', 'Foro', 'Prensa', 'Nuestro blog', \
                     'Directrices de la comunidad', 'Términos del servicio', 'Privacidad', 'Enero', '/EDT/', '/Febrero/', '/Marzo/', '/Abril/', '/Mayo/', '/Junio/', '/Juloi/', '/Agosto/', '/Septiembre/', '/Octubre/'\
                     '/Noviembre/', '/Diciembre/']}}})
+            
+            elif str(Id) == '30':
+                #Remove data
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Nombre '}}})
+
+                for i in self.STG_projects_pro_list.find({"TITLE":name}, {"DESCRIPTION":1, "_id":0})[0].get("DESCRIPTION") :
+
+                        if 'Periodo' in i:
+                            self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":i}})
+                            self.STG_projects_pro_list.update({"TITLE":name},{"$addToSet":{"START DATE": i[8:18] }})
+                            
+                            #Classify start and end date
+                            if len(i) > 20 :
+                                self.STG_projects_pro_list.update({"TITLE":name},{"$addToSet":{"END DATE": i[21:31] }})
+
+            elif str(Id) == '38':
+
+                #Classify dates and remove it
+                for i in self.STG_projects_pro_list.find({"TITLE":name})[0].get("DESCRIPTION"):
+                    if 'Project Duration' in i:
+                        self.STG_projects_pro_list.update({"TITLE":name},{"$addToSet":{"START DATE": i[17:27] }})
+                        self.STG_projects_pro_list.update({"TITLE":name},{"$addToSet":{"END DATE": i[29:39] }})
+
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Project Duration'}}})
+                
+                
+
+            elif str(Id) == '35':
+
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['À LA UNE', 'À lire  :', 'A lire  :', 'Contact  ' ]}}})
+
+                prev_str = ''
+
+                for i in self.STG_projects_pro_list.find({"TITLE":name}, {"DESCRIPTION":1, "_id":0})[0].get("DESCRIPTION")  :
+                    if i.count(' ') <= 1 :
+                        self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":i}})
+                         
+                        prev_str = prev_str + " " + i
+                
+                #Insert joined text
+                self.STG_projects_pro_list.update({"TITLE":name},{"$addToSet":{"DESCRIPTION": prev_str }})            
+
+
+
+            elif str(Id) == '124':
+                #Remove data
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['1', '2' ]}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"WEB":{"$regex":'https://www.nhm.ac.uk/take-part/'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['Get the latest updates from our citizen science team']}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Project Plumage '}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Big Seaweed Search '}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'UK Whale and Dolphin Strandings '}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Earthworm '}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Miniature Lives '}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'The Microverse Discover '}}}) 
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Decoding Nature Students '}}}) 
+
+
+
+            elif str(Id) == '128':
+                #Remove data
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['FOLLOW US', 'Photo credits:' \
+                   '×', ' Close ', 'Contact Ed', ' ', 'Follow us' ]}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'©'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'We will never sell '}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'By using our site '}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Get access to free resources '}}})
+
+
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"WEB":{"$regex":'https://earthwatch.org.uk/'}}})
+
+      
+            elif str(Id) == '134':
+                #Remove data
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['Get involved', 'Become a collaborator', 'Interested in a PhD at the LRCFS?' \
+                    'Where possible, we encourage you to get involved in our work through citizen science', 'Collaborate with us to improve forensic science now and for the future' \
+                    'Find out further details about our PhD opportunities' ]}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"WEB":{"$regex":'/getinvolved/'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"WEB":{"$regex":'/collaborators/'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"WEB":{"$regex":'/forensic-science/'}}})
+
 
             elif str(Id) == '65':
                 #Move and map category
@@ -186,6 +267,8 @@ class Datacleaning:
                             self.STG_projects_pro_list.update_one({"TITLE":name},{"$addToSet":{ "TOPICS": i.partition('=')[2] }})
                 except:
                     pass
+
+
 
                 #Remove data
                 self.STG_projects_pro_list.update_one({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['more', 'Loading map...', 'View map...', 'Then…']}}})
@@ -260,7 +343,7 @@ class Datacleaning:
                 self.STG_projects_pro_list.remove({'TITLE': name})
                 self.STG_projects_pro_list.insert(x)
 
-    def FIN_insert_all(self, Id, wp2_id ):
+    def FIN_insert_all(self, Id, wp2_id, language ):
 
         for x in self.STG_projects_pro_list.find({"Plat Id": str(Id)}):
              
@@ -271,7 +354,9 @@ class Datacleaning:
                 #If project does not exist, then insert it
                 self.CSTrack_projects_descriptors.insert_one(x)
                 self.CSTrack_projects_descriptors.update({'TITLE': name},{'$set':{'Wp2 Id':wp2_id}})   #Check!!!
-            
+                self.CSTrack_projects_descriptors.update({'TITLE': name},{'$set':{'Language':language}})   #Check!!!
+
+
             else:
 
                 #If project exists, then check if there is new information
@@ -297,7 +382,7 @@ class Datacleaning:
             '''Url = list(x.values())[2]
             Name = list(x.values())[3]'''
             wp2_id = int(self.collection_pla.find({"Id":Id})[0].get("Wp2 Id"))
-
+            language = str(self.collection_pla.find({"Id":Id})[0].get("Language"))
             
             #if is informed as to be loaded
             if str(self.collection_pla.find({"Id":Id})[0].get("Load")) == 'yes':
@@ -313,9 +398,9 @@ class Datacleaning:
                     self.Check_descriptors(Id)
 
                     #Insert data
-                    self.FIN_insert_all(Id, wp2_id)
+                    self.FIN_insert_all(Id, wp2_id, language)
     
                 
 data_cleaning = Datacleaning()
 #data_cleaning.check_num_projects(9, "valores")
-data_cleaning.Datacleaning_projects(65)
+data_cleaning.Datacleaning_projects(38)
