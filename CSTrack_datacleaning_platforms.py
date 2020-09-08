@@ -96,7 +96,7 @@ class Datacleaning:
                     self.insert_information(Id, Name, Url, country, wp2_id)
 
             elif Id == 33:
-                if  Name != 'weiterlesen...':
+                if  Name != 'weiterlesen...' and Url != 'https://www.uni-muenster.dehttps://www.uni-muenster.de/AFO/CS/mitforschen/lateralitaet.html':
 
                     #If is a correct value insert
                     self.insert_information(Id, Name, Url, country, wp2_id)
@@ -150,6 +150,28 @@ class Datacleaning:
                     #If is a correct value insert
                     self.insert_information(Id, Name, Url, country, wp2_id)
 
+            elif Id == 60:
+                if Name != 'Inici' and Name != 'Contacto' and Name != 'Decálogo' :
+                    #If is a correct value insert
+                    self.insert_information(Id, Name, Url, country, wp2_id)
+
+            elif Id == 62:
+                if Name != 'ENG' and Name != 'ESP' and Name != 'CAT' :
+                    #If is a correct value insert
+                    self.insert_information(Id, Name, Url, country, wp2_id)
+
+            elif Id == 63:
+                if Name != 'next ›' and Name != '‹ previous':
+                    #If is a correct value insert
+                    self.insert_information(Id, Name, Url, country, wp2_id)
+            
+            elif Id == 61:
+                if Name != 'Ciencia ciudadana' and Name != '#CienciaDirecta' and Name != 'Perfil del contratante' \
+                    and Name != 'Patronos' and Name != 'Contacto' and Name != 'Más información':
+                    #If is a correct value insert
+                    self.insert_information(Id, Name, Url, country, wp2_id)
+
+
             else:
                 #If is a correct value insert
                 self.insert_information(Id, Name, Url, country, wp2_id)
@@ -169,7 +191,7 @@ class Datacleaning:
             wp2_id = int(self.collection_pla.find({"Id":Id})[0].get("Wp2 Id"))
 
             #if is informed as to be loaded
-            if str(self.collection_pla.find({"Id":Id})[0].get("Load")) == 'yes':
+            if str(self.collection_pla.find({"Id":Id})[0].get("Load")) == 'yes' :
                 #check the number of projects and if it is a correct value. Insert it if all correct
                 self.check_num_projects (Id, Name, Url, country, wp2_id) 
 
@@ -177,4 +199,4 @@ class Datacleaning:
                 
 data_cleaning = Datacleaning()
 #data_cleaning.check_num_projects(9, "valores")
-data_cleaning.Datacleaning_platforms(34)
+data_cleaning.Datacleaning_platforms(13)

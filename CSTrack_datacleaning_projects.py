@@ -1,6 +1,7 @@
 import time
 from pymongo import MongoClient
 from datetime import date
+from langdetect import detect
 
 
 class Datacleaning:
@@ -20,13 +21,21 @@ class Datacleaning:
 
         self.CSTrack_platform_projects = db.CSTrack_platforms_projects
         self.CSTrack_projects_descriptors = db.CSTrack_projects_descriptors
-
+        
+        #change this collection to execute the data cleaning process
         self.STG_projects_pro_list = db.STG_projects_pro_list
+        #db.STG_projects_pro_list
+        #db.CSTrack_projects_descriptors
 
         self.CSTrack_config = db.CSTrack_config  #Projects information
         self.log_error = db.CSTrack_logerror #Store error for datacleaning
         self.check_data_cleaning = db.CSTrack_check_data_cleaning #Check number of projects or other conditions
-        
+
+    def language(self, Id, text):
+
+        lng = detect(str(text))
+        return self.check_data_cleaning.find({"Id":4}, {"Languages":1, "_id":0})[0].get("Languages")[lng] 
+            
 
     def Check_num_projects(self, Id):
 
@@ -61,28 +70,38 @@ class Datacleaning:
     
     def Check_descriptors(self, Id):
 
+
         for x in self.STG_projects_pro_list.find({"Plat Id": str(Id)}):
-            #print(x)
+
             name = str(list(x.values())[1])
 
-            #Remove null values
-            self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":""}})
+            try:
+                #Remove null values
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":""}})
 
-            #Remove @ in description
-            self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'@'}}})
+                #Remove @ in description
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'@'}}})
 
-            #Remove *, ',' in description
-            self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['*', ',', ' ', '','  ', '   ', '     ', '         ']}}})
+                #Remove *, ',' in description
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['*', ',', '.', ' ', ' ', '','  ', '   ', '     ', '         ']}}})
 
-            #Remove jvascript message in description
-            self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'javascript:'}}})
-
+                #Remove jvascript message in description
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'javascript:'}}})
+            
+            except:
+                pass
 
             if str(Id) == '13':
                 #Remove data
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['Join in', 'Get started', 'Learn more', 'Volunteers', 'Classifications', \
                     'Subjects', 'Completed Subjects']}}})
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'STATISTICS'}}})
+
+                if self.STG_projects_pro_list.find({"TITLE":name,"DESCRIPTION":{"$regex":'Looks like this project is out of data at the moment!'}}).count() > 0 :
+
+                    self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Looks like this project is out of data at the moment!'}}})   
+                    self.STG_projects_pro_list.update({"TITLE":name},{"$set":{"STATUS":["FINISHED"]}})   
+
 
                 #Classify webpages                
                 
@@ -136,10 +155,184 @@ class Datacleaning:
 
             elif str(Id) == '111':
                 #Remove data
-                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['Acerca de', 'Ayuda', 'Foro', 'Prensa', 'Nuestro blog', \
-                    'Directrices de la comunidad', 'Términos del servicio', 'Privacidad', 'Enero', '/EDT/', '/Febrero/', '/Marzo/', '/Abril/', '/Mayo/', '/Junio/', '/Juloi/', '/Agosto/', '/Septiembre/', '/Octubre/'\
-                    '/Noviembre/', '/Diciembre/']}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":[' Acerca de ', ' Ayuda ', ' Foro ', ' Prensa ', ' Nuestro blog ', \
+                    ' Directrices de la comunidad ', ' Términos del servicio ', ' Privacidad ', 'Enero', '/EDT/', '/Febrero/', '/Marzo/', '/Abril/', '/Mayo/', '/Junio/', '/Juloi/', '/Agosto/', '/Septiembre/', '/Octubre/'\
+                    '/Noviembre/', '/Diciembre/', ' Explora ', '   Comunidad    Personas Proyectos Artículos en el diario Foro   ', 'Personas', 'Proyectos', 'Artículos en el diario', 'Foro', \
+                    '   Más    Información sobre taxones Guías Lugares Estadísticas del sitio  Ayuda   ', 'Información sobre taxones', 'Guías', 'Lugares', 'Estadísticas del sitio',\
+                    'Ayuda', ' Acceder o Crear una cuenta ', ' العربية ', ' български ', ' Breton ', ' Català ', ' český ', ' český ', ' Dansk ', ' Deutsch ', ' Ελληνικά ' ,\
+                    ' English ', ' Esperanto ', ' Español  ', ' Español ', ' Español (Argentina) ', ' Español (México) ', ' Eesti ', ' Euskara ', ' suomi ', ' français ', ' Français (Canada) ',\
+                    ' Galego ', ' עברית ', ' bahasa Indonesia ', ' Italiano ', ' 日本語 ', ' 한국어 ', ' Lëtzebuergesch ', ' Lietuvių ', ' македонски ', ' Norsk Bokmål ',\
+                    ' Nederlands ', ' Occitan ', ' Polski ', ' Português ', ' Português (Brasil) ', ' Русский ', ' Slovenský ', ' Shqip ', ' Svenska ', ' Türkçe ', ' 简体中文 ',\
+                    ' 繁體中文 ', '¡Ayúdanos a traducir!', 'Clase', '      Términos & Reglas | Unirse a este proyecto    ', 'Datos de mapas ©2020', 'Capas', 'Toggle Dropdown'\
+                    'Necesita ', '2', '1', 'rado', 'nv.', '3' , '»', '   Desconocido  ', 'Subfamilia', 'Necesita ', ' ¿Esto es inapropiado, spam u ofensivo?  Agregar una marca  '\
+                    '41', 'Toggle Dropdown', 'Género', 'Reino', 'excepto', 'orden', '0', '13', 'comments', '7', 'Orden', '4', '113', '67', 'Familia', '5', 'Datos de mapas ©2020 Google'\
+                    '9', '10', '41', '28', 'comment', 'Datos de mapas ©2020 Google, INEGI', '25', '46', '185', '17', '6', '25','4','11']}}})
+
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'        '}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'      Términos & Reglas | Unirse a este proyecto    '}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'      '}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Acerca de'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Ayuda'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Foro'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Prensa'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Nuestro blog'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Directrices de la comunidad'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Términos del servicio'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Privacidad'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Proyectoscualquiera'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Grado de calidadcualquiera'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Clasificacióncualquiera'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'¿Esto es inapropiado, spam u ofensivo?'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'(En algún lugar...)'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Datos de mapas ©2020  Imágenes ©2020 , Maxar Technologies, USDA Farm Service Agency'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'ssp.'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Privacidad'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'más ↓'}}})
+
+
+
+
+
+
+
+                #GEOGRAPHICAL LOCATION
+                try: 
+                    #Remove text from list
+                    for i in self.STG_projects_pro_list.find({"TITLE":name}, {"GEOGRAPHICAL LOCATION":1, "_id":0})[0].get("GEOGRAPHICAL LOCATION") :
+                        #Remove previous data
+                        self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"GEOGRAPHICAL LOCATION":i}})
+
+                        #Remove text and insert in list 
+                        text = i.replace('Ubicación', '')
+                        text = text.replace(' : ', '')
+                        
+                        self.STG_projects_pro_list.update({"TITLE":name},{"$addToSet":{"GEOGRAPHICAL LOCATION":text.replace('cualquiera', 'any')}})
+                        
+                        
+                except:
+                    pass
+
+                #DEVELOPMENT TIME
+                try: 
+                    #Remove text from list
+                    for i in self.STG_projects_pro_list.find({"TITLE":name}, {"DEVELOPMENT TIME":1, "_id":0})[0].get("DEVELOPMENT TIME") :
+                        
+                        #Remove previous data
+                        self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DEVELOPMENT TIME":i}})
+
+                        #Remove text and insert in list 
+                        text = i.replace('Fecha', '')
+                        text = text.replace(' : ', '')
+                         
+                        self.STG_projects_pro_list.update({"TITLE":name},{"$addToSet":{"DEVELOPMENT TIME":text.replace('cualquiera', 'any')}})
+                        
+                        
+                except:
+                    pass
+
+                #TOPICS
+                try: 
+                    #Remove text from list
+                    for i in self.STG_projects_pro_list.find({"TITLE":name}, {"TOPICS":1, "_id":0})[0].get("TOPICS") :
+                        
+                        #Remove previous data
+                        self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"TOPICS":i}})
+                        
+                        #Remove text and insert in list 
+                        text =i.replace('Taxones', '')
+                        text = text.replace(' : ', '')
+                         
+                        self.STG_projects_pro_list.update({"TITLE":name},{"$addToSet":{"TOPICS":text.replace('cualquiera', 'any')}})
+                        
+                        
+                except:
+                    pass
+
+                #MAIN PROGRAM OR PERSON IN CHARGE
+                try: 
+                    #Remove text from list
+                    for i in self.STG_projects_pro_list.find({"TITLE":name}, {"MAIN PROGRAM OR PERSON IN CHARGE":1, "_id":0})[0].get("MAIN PROGRAM OR PERSON IN CHARGE") :
+                        
+                        #Remove previous data
+                        self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"MAIN PROGRAM OR PERSON IN CHARGE":i}})
+
+                        #Remove text and insert in list
+                        if 'Creado por:' in i :
+                            text = i.replace('Creado por:', '')
+                            text = text.replace(' : ', '')
+
+                        elif 'Administradores de proyecto:' in i :
+                            text =i.replace('Administradores de proyecto:', '')
+                            text = text.replace(' : ', '')
+
+                        elif 'Todos los taxones' in i:
+                            self.STG_projects_pro_list.update({"TITLE":name},{"$addToSet":{"TOPICS": 'All taxa'}})
+                            pass
+                        
+                        text = text.replace('cualquiera', 'any') 
+                        
+                        self.STG_projects_pro_list.update({"TITLE":name},{"$addToSet":{"MAIN PROGRAM OR PERSON IN CHARGE": text}})
+
+                except:
+                    pass
+
+                #PARTICIPANTS PROFILE
+                try: 
+                    #Remove text from list
+                    for i in self.STG_projects_pro_list.find({"TITLE":name}, {"PARTICIPANTS PROFILE":1, "_id":0})[0].get("PARTICIPANTS PROFILE") :
+                        
+                        #Remove previous data
+                        self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"PARTICIPANTS PROFILE":i}})
+
+                        #Remove text and insert in list 
+                        text =i.replace('Usuarios', '')
+                        text = text.replace(' : ', '')
+                        
+                        if text:
+                            self.STG_projects_pro_list.update({"TITLE":name},{"$addToSet":{"PARTICIPANTS PROFILE":text.replace('cualquiera', 'any')}})  
+                        
+                except:
+                    pass
+                
+                #TOOLS AND MATERIALS
+                try: 
+                    #Remove text from list
+                    for i in self.STG_projects_pro_list.find({"TITLE":name}, {"TOOLS AND MATERIALS":1, "_id":0})[0].get("TOOLS AND MATERIALS") :
+                        
+                        #Remove previous data
+                        self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"TOOLS AND MATERIALS":i}})
+                        
+                        #Remove text and insert in list 
+                        text =i.replace('Tipo de medios', '')
+                        text = text.replace(' : ', '')
+                        
+                        self.STG_projects_pro_list.update({"TITLE":name},{"$addToSet":{"TOOLS AND MATERIALS":text.replace('cualquiera', 'any')}})
+                        
+                        
+                except:
+                    pass
+
+
+            elif str(Id) == '37':
+                #Remove data
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['Créé et développé par :','Animé par :','Soutenu par :'\
+                    ,'             Actus         ','             Evénements         ','                 Espace Pro             ', 'Soutenu par :', \
+                    '                 Espace Pro             ','         Qui sommes-nous?     ','         FAQ     ','         Charte du portail     '\
+                    '         Presse     ','         Les conditions générales d*utilisation (CGU)     ','         Contact     ','Open', \
+                    'Observatoires participatifs des espèces et de la nature','Menu','×','⇧','i','CARACTÉRISTIQUES','LOCALISATION','ACTUS', \
+                    ' Voir le site web', '         Charte du portail     ','         Presse     ', ]}}})
             
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'  Participer  '}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'  Ressources  '}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Les conditions générales '}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'OBSERVATOIRES'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'ÉVÉNEMENTS'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'RESSOURCES'}}})
+
+
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"WEB":{"$regex":'https://www.open-sciences-participatives.org/actus/'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"WEB":{"$regex":'https://www.open-sciences-participatives.org/liste-evenements/'}}})
+
             elif str(Id) == '30':
                 #Remove data
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Nombre '}}})
@@ -196,6 +389,43 @@ class Datacleaning:
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'The Microverse Discover '}}}) 
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Decoding Nature Students '}}}) 
 
+            elif str(Id) == '32':
+                #Remove data
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['HOME', 'citizenscience:germany', 'IMPRESSUM'\
+                'DATENSCHUTZ','BERICHTE/KOMMENTARE', 'PROJEKTE', 'IDEEN', 'ONLINE-DOSSIER', 'Partner:' ]}}})
+
+                
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'IMPRESSUM'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'DATENSCHUTZ'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Sign up as an Entrepreneur'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Foto oben: Markus Wegner/www.pixelio.de'}}})
+
+            elif str(Id) == '33':
+                
+                self.STG_projects_pro_list.remove({"TITLE":{"$regex":"No se puede acceder a este sitio web"}})
+
+                #Remove data    
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['FAQ', 'Aktuelle Veranstaltungen' , \
+                'TransferschuleAktuelle VeranstaltungenVeranstaltungsarchivTransferbibliothek', 'Veranstaltungsarchiv', 'Transferbibliothek', \
+                'Citizen ScienceCS@WWUCS WettbewerbMitforschenNetzwerk', 'CS@WWU', 'CS Wettbewerb', 'Mitforschen', 'Netzwerk', \
+                'HomeCitizen Scienceduewelsteene', 'Citizen Scienceduewelsteene', 'duewelsteene', 'Facebook', 'Impressum', 'Datenschutzhinweis', \
+                'Website', 'Cookies', 'Arbeitsstelle Forschungstransfer', '48149', 'Münster', '+49 251 83-32221', '+49 251 83-32123', \
+                'wissen', 'leben', 'Erfindungsmeldung', 'WWU Technologieangebote / Erfindungen', 'Veranstaltungen', \
+                'Gesetzliche Grundlagen', 'Erfindersprechstunde', 'Gründungen', 'Abgeschlossene Projekte', 'MUIMUN', 'Gesetzliche Grundlagen', \
+                'Bioinspiration', 'Expedition Münsterland', 'Ideen-Mining', 'Anfahrt und Lageplan', \
+                'Trainees & Stipendiaten', 'Wirtschaftsbeirat', 'Transferpreis', 'Jahresberichte', 'Team', 'zur Subnavigation',  \
+                'Robert-Koch-Straße 4048149 Münster',  ]}}})
+
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'PatenteErfindersprechstundeGesetzliche'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'WissenstransferIdeen'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Die AFOTeamJahresberichteTransferpreisWirtschaftsbeiratTrainees'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Diese Website '}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'© '}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'zum Inhalt'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'zur Hauptnavigation'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Enabling Innovation'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Innovationslabor'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Außendarstellung der'}}})
 
 
             elif str(Id) == '128':
@@ -207,10 +437,41 @@ class Datacleaning:
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'By using our site '}}})
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Get access to free resources '}}})
 
-
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"WEB":{"$regex":'https://earthwatch.org.uk/'}}})
 
+            elif str(Id) == '60':
+                #Remove data
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['Mosquito Alert', 'BioBlitzBcn', 'Líquenes de Barcelona'\
+                    'Inici', '»', 'InSPIRES', 'Floodup', 'Red de Observadores Meteorológicos', 'Plant*tes', 'Observadores del Mar', 'Juegos para el Cambio Social'\
+                     ]}}})
+
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"WEB":{"$regex":'https://www.barcelona.cat/barcelonaciencia/es/'}}})
       
+            elif str(Id) == '61':
+                #Remove data
+                if 'ACTUALIDAD CIENTÍFICA' in name:
+                    self.STG_projects_pro_list.remove({"TITLE":name})
+                else:
+                    self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"WEB":{"$regex":'https://fundaciondescubre.es/#'}}})
+                    self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['CONTÁCTANOS IR AL SITIO WEB']}}})
+
+            elif str(Id) == '66':
+                #Remove data
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['Ataria - Ciencia Ciudadana', 'Ataria - Ciencia Ciudadana - Programas de Conservación'\
+                    'Compartir en Facebook', 'Compartir en Twitter', 'Compartir en Linkedin', 'Enviar correo', 'Centro de Estudios Ambientales', 'Ciencia Ciudadana' \
+                    '¿Qué es Ciencia Ciudadana?', '100&CIA', 'Programas de Conservación', 'Programas de Seguimiento', 'Cartografía', 'Banco fotográfico', 'Contacto'\
+                    'https://www.twitter.com/vg_ataria(Se abre en una ventana nueva)', 'Enlaces de interés', 'Ataria', 'Anillo Verde', 'Escuchar la página' ]}}})
+
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"WEB":{"$regex":'mailto:'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"WEB":{"$regex":'https://www.vitoria-gasteiz.org/wb021/was/contenidoAction.do?idioma=es&uid='}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"WEB":{"$regex":'https://www.vitoria-gasteiz.org/we001/was/we001Action.do?idioma=es'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"WEB":{"$regex":'https://sedeelectronica.vitoria-gasteiz.org/'}}})
+      
+            elif str(Id) == '63':
+                #Remove data
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['1', '2', '3' ]}}})
+
+
             elif str(Id) == '134':
                 #Remove data
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['Get involved', 'Become a collaborator', 'Interested in a PhD at the LRCFS?' \
@@ -343,11 +604,15 @@ class Datacleaning:
                 self.STG_projects_pro_list.remove({'TITLE': name})
                 self.STG_projects_pro_list.insert(x)
 
-    def FIN_insert_all(self, Id, wp2_id, language ):
+    def FIN_insert_all(self, Id, wp2_id):
 
         for x in self.STG_projects_pro_list.find({"Plat Id": str(Id)}):
              
             name = str(list(x.values())[1])
+            try:
+                language = self.language(Id, x["DESCRIPTION"] )        
+            except:
+                language = str(self.collection_pla.find({"Id":Id})[0].get("Language"))
 
             if self.CSTrack_projects_descriptors.find({'TITLE': name}).count() == 0:
 
@@ -371,7 +636,13 @@ class Datacleaning:
                         
                     except:
                         pass
-                
+
+    def Only_data_cleaning(self, Id, collection)  :
+
+        #CHANGE COLLECTION __INIT__
+        
+        #Clean collection
+        self.Check_descriptors(str(Id))
             
             
 
@@ -379,28 +650,28 @@ class Datacleaning:
 
         for x in self.collection_pla.find({"Id": Id2}):
             Id = list(x.values())[1]
-            '''Url = list(x.values())[2]
-            Name = list(x.values())[3]'''
             wp2_id = int(self.collection_pla.find({"Id":Id})[0].get("Wp2 Id"))
-            language = str(self.collection_pla.find({"Id":Id})[0].get("Language"))
             
             #if is informed as to be loaded
-            if str(self.collection_pla.find({"Id":Id})[0].get("Load")) == 'yes':
+            if str(self.collection_pla.find({"Id":Id})[0].get("Load")) == 'yes' :
                 #check the number of projects and if it is a correct value. Insert it if all correct
                 self.Check_num_projects (Id) 
 
                 if self.result == 'OK':
 
                     #Step to create STG to clean dat
-                    self.STG_insert_all(Id)
+                    #self.STG_insert_all(Id)
 
                     #Clean data in STG step
-                    self.Check_descriptors(Id)
+                    #self.Check_descriptors(Id)
 
                     #Insert data
-                    self.FIN_insert_all(Id, wp2_id, language)
+                    self.FIN_insert_all(Id, wp2_id)
     
                 
 data_cleaning = Datacleaning()
 #data_cleaning.check_num_projects(9, "valores")
-data_cleaning.Datacleaning_projects(38)
+data_cleaning.Datacleaning_projects(111)
+
+#With only this sentence and changing "self.STG_projects_pro_list", line 25 by other collection it cleans all data from collection.
+#data_cleaning.Only_data_cleaning(40, "db.CSTrack_projects_descriptors")
