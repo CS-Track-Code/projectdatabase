@@ -94,8 +94,20 @@ class Datacleaning:
             if str(Id) == '13':
                 #Remove data
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['Join in', 'Get started', 'Learn more', 'Volunteers', 'Classifications', \
-                    'Subjects', 'Completed Subjects']}}})
+                    'Subjects', 'Completed Subjects', 'Blog', 'NQG! Facebook Group', 'See the results or dismiss this message', 'Receive NQG! Updates' ]}}})
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'STATISTICS'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'person is talking about'}}})
+                
+                self.STG_projects_pro_list.remove({"TITLE":'Organizations', "Plat Id": "13"})
+                self.STG_projects_pro_list.remove({"TITLE":'The Project', "Plat Id": "13"})
+                self.STG_projects_pro_list.remove({"TITLE":'#TheyFreedThemselves', "Plat Id": "13"})
+                self.STG_projects_pro_list.remove({"TITLE":'BUBBLE NEBULAE: IDENTIFY, MARK, AND SIZE', "Plat Id": "13"})
+                self.STG_projects_pro_list.remove({"TITLE":'Volunteers Wanted! 75,000 Strong!', "Plat Id": "13"})
+                self.STG_projects_pro_list.remove({"TITLE":'De Hoop Nature Reserve', "Plat Id": "13"})
+                self.STG_projects_pro_list.remove({"TITLE":'The Notes from Nature Project', "Plat Id": "13"})
+                self.STG_projects_pro_list.remove({"TITLE":'Find, classify and measure aurora!', "Plat Id": "13"})
+                self.STG_projects_pro_list.remove({"TITLE":{"$regex":"Imagine a galaxy, behind another galaxy"}, "Plat Id": "13"})
+                self.STG_projects_pro_list.remove({"TITLE":{"$regex":"Welcome to "}, "Plat Id": "13"})
 
                 if self.STG_projects_pro_list.find({"TITLE":name,"DESCRIPTION":{"$regex":'Looks like this project is out of data at the moment!'}}).count() > 0 :
 
@@ -595,7 +607,7 @@ class Datacleaning:
              
             name = str(list(x.values())[1])
 
-            if self.STG_projects_pro_list.find({'TITLE': name}).count == 0:
+            if self.STG_projects_pro_list.find({'TITLE': {"$regex":name}}).count == 0:
                 #If project does not exist, then insert it
                 self.STG_projects_pro_list.insert(x)
             
@@ -621,13 +633,12 @@ class Datacleaning:
                 self.CSTrack_projects_descriptors.update({'TITLE': name},{'$set':{'Wp2 Id':wp2_id}})   #Check!!!
                 self.CSTrack_projects_descriptors.update({'TITLE': name},{'$set':{'Language':language}})   #Check!!!
 
-
             else:
 
                 #If project exists, then check if there is new information
                 for i in range(1,len(list(x.values()))):
                     try:
-                        #Go through and array and check if the information already exists
+                        #Go through the array and check if the information already exists
                         for j in range(0, len(list(x.values())[i])) :
                             #Read all the information of each descriptor (array) and check if exist. If not, insert.
                             self.CSTrack_projects_descriptors.update({"TITLE":name},{"$addToSet":{str(list(x)[i]):str(list(x.values())[i][j])}})
@@ -660,18 +671,21 @@ class Datacleaning:
                 if self.result == 'OK':
 
                     #Step to create STG to clean dat
-                    #self.STG_insert_all(Id)
+                    self.STG_insert_all(Id)
 
                     #Clean data in STG step
-                    #self.Check_descriptors(Id)
+                    self.Check_descriptors(Id)
 
                     #Insert data
                     self.FIN_insert_all(Id, wp2_id)
+
+        self.collection_proj.remove({"Plat Id": str(Id2)})
+
     
                 
 data_cleaning = Datacleaning()
 #data_cleaning.check_num_projects(9, "valores")
-data_cleaning.Datacleaning_projects(111)
+data_cleaning.Datacleaning_projects(13)
 
 #With only this sentence and changing "self.STG_projects_pro_list", line 25 by other collection it cleans all data from collection.
 #data_cleaning.Only_data_cleaning(40, "db.CSTrack_projects_descriptors")

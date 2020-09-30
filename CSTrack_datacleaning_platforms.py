@@ -6,8 +6,8 @@ class Datacleaning:
     def __init__(self):
         #Mongodb connection
         #conn = MongoClient('mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false') #localhost
-        conn = MongoClient('mongodb://root:g9k.LS00-1!JbzA8..@internal-docker.sb.upf.edu:8327/?readPreference=primary&appname=MongoDB%20Compass&ssl=false')
-        #conn = MongoClient('mongodb://root:g9k.LS00-1!JbzA8..@internal-docker.sb.upf.edu:8336/?readPreference=primary&appname=MongoDB%20Compass&ssl=false')
+        #conn = MongoClient('mongodb://root:g9k.LS00-1!JbzA8..@internal-docker.sb.upf.edu:8327/?readPreference=primary&appname=MongoDB%20Compass&ssl=false')
+        conn = MongoClient('mongodb://root:g9k.LS00-1!JbzA8..@internal-docker.sb.upf.edu:8336/?readPreference=primary&appname=MongoDB%20Compass&ssl=false')
         
         #Mongodb database and repository
         db = conn.CSTrack
@@ -23,7 +23,7 @@ class Datacleaning:
         self.check_data_cleaning = db.CSTrack_check_data_cleaning #Check number of projects or other conditions
 
 
-    def check_num_projects(self, Id, Name, Url, country, wp2_id):
+    def check_num_projects(self, Id):
 
         #0: Get the number of projects loaded
         num_projects = self.collection.find({"Id":Id}).count()
@@ -46,13 +46,13 @@ class Datacleaning:
             #print(f"The project with {Id} has loaded successfully")
             self.check_data_cleaning.update_one({"Id":1, "List":{"$elemMatch":{"Id":Id}}},{"$set":{"List.$.number":num_projects, "List.$.date_update": str(date.today())}})
 
-            #Check if the link is a correct value to insert it in the document
-            self.check_links (Id, Name, Url, country, wp2_id)
-
+            self.result = 'OK'
+            
         else:
             #3: if it is not, update log error to inform that the number of projects loaded is lower than the stored in the previous execution 
-            self.log_error.insert_one({"Error type": "Number of projects link from platform loaded in projects_pla_list", "Id": Id, "Error": "The project with Id " + str(Id) + " has loaded only " + str(num_stored) + " check the URL: " + Url , "date_update": str(date.today())})
+            self.log_error.insert_one({"Error type": "Number of projects link from platform loaded in projects_pla_list", "Id": Id, "Error": "The project with Id " + str(Id) + " has loaded only " + str(num_stored) , "date_update": str(date.today())})
             
+            self.result = 'NOT OK'
 
     def check_links (self, Id, Name, Url, country, wp2_id):
 
@@ -182,6 +182,8 @@ class Datacleaning:
 
 
     def Datacleaning_platforms(self, Id2):
+        #check the number of projects and if it is a correct value. Insert it if all correct
+        self.check_num_projects (Id2)
 
         for x in self.collection.find({"Id": Id2}):
             Id = list(x.values())[1]
@@ -191,12 +193,11 @@ class Datacleaning:
             wp2_id = int(self.collection_pla.find({"Id":Id})[0].get("Wp2 Id"))
 
             #if is informed as to be loaded
-            if str(self.collection_pla.find({"Id":Id})[0].get("Load")) == 'yes' :
-                #check the number of projects and if it is a correct value. Insert it if all correct
-                self.check_num_projects (Id, Name, Url, country, wp2_id) 
+            if str(self.collection_pla.find({"Id":Id})[0].get("Load")) == 'yes' and self.result == 'OK' :
 
-               
+                #Check if the link is a correct value to insert it in the document
+                self.check_links (Id, Name, Url, country, wp2_id)
                 
 data_cleaning = Datacleaning()
 #data_cleaning.check_num_projects(9, "valores")
-data_cleaning.Datacleaning_platforms(13)
+data_cleaning.Datacleaning_platforms(17)
