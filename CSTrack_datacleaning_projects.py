@@ -2,17 +2,16 @@ import time
 from pymongo import MongoClient
 from datetime import date
 from langdetect import detect
+from CSTrack_Mongo_conn import connection
 
 
-class Datacleaning:
+class DatacleaningProjects:
     def __init__(self):
         #Mongodb connection
-        #conn = MongoClient('mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false') #localhost
-        conn = MongoClient('mongodb://root:g9k.LS00-1!JbzA8..@internal-docker.sb.upf.edu:8327/?readPreference=primary&appname=MongoDB%20Compass&ssl=false')
-        #conn = MongoClient('mongodb://root:g9k.LS00-1!JbzA8..@internal-docker.sb.upf.edu:8336/?readPreference=primary&appname=MongoDB%20Compass&ssl=false')
-        
+        self.conn = MongoClient(connection())
+
         #Mongodb database and repository
-        db = conn.CSTrack
+        db = self.conn.CSTrack
 
         #Collections
         self.collection_pla =  db.platforms_pla_list #Platforms
@@ -40,11 +39,11 @@ class Datacleaning:
     def Check_num_projects(self, Id):
 
         #0: Get the number of projects loaded
-        num_projects = self.CSTrack_platform_projects.find({"Id":Id}).count()
+        num_projects = self.collection_proj.find({"Plat Id":Id, "Insert date": str(date.today())}).count()
 
         #1: check if the number of projects is equal or greater to the previous number
         
-        #  CAMBIAAAAR     Retrieve the number of projects stored in a dictionary in document
+        # Retrieve the number of projects stored in a dictionary in document
         list_values = self.check_data_cleaning.find({"Id":2,"List":{"$elemMatch":{"Id":Id}}})[0].get("List") 
 
         #For each value, retrieve a tuple with the different values
@@ -60,18 +59,19 @@ class Datacleaning:
             #print(f"The project with {Id} has loaded successfully")
             self.check_data_cleaning.update_one({"Id":2, "List":{"$elemMatch":{"Id":Id}}},{"$set":{"List.$.number":num_projects, "List.$.date_update": str(date.today())}})
 
-            self.result = 'OK'
 
         else:
+            self.check_data_cleaning.update_one({"Id":2, "List":{"$elemMatch":{"Id":Id}}},{"$set":{"List.$.number":num_projects, "List.$.date_update": str(date.today())}})
+
             #3: if it is not, update log error to inform that the number of projects loaded is lower than the stored in the previous execution 
             self.log_error.insert_one({"Error type": "Number of projects with descriptors in projects_pro_list", "Id": Id, "Error": "The project with Id " + str(Id) + " has loaded only " + str(num_stored) + " check the URL ", "date_update": str(date.today())})
 
-            self.result = 'FAIL'
+
     
     def Check_descriptors(self, Id):
 
 
-        for x in self.STG_projects_pro_list.find({"Plat Id": str(Id)}):
+        for x in self.STG_projects_pro_list.find({"Plat Id": str(Id), "Insert date": str(date.today())}):
 
             name = str(list(x.values())[1])
 
@@ -200,11 +200,6 @@ class Datacleaning:
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'ssp.'}}})
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Privacidad'}}})
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'más ↓'}}})
-
-
-
-
-
 
 
                 #GEOGRAPHICAL LOCATION
@@ -603,50 +598,68 @@ class Datacleaning:
                 
     def STG_insert_all(self, Id):
 
-        for x in self.collection_proj.find({"Plat Id": str(Id)}):
+        for x in self.collection_proj.find({"Plat Id": str(Id), "Insert date": str(date.today()) }):
              
-            name = str(list(x.values())[1])
+            url = str(self.collection_proj.find({"Plat Id": str(Id)})[0].get("Url platform"))
 
-            if self.STG_projects_pro_list.find({'TITLE': {"$regex":name}}).count == 0:
+            if self.STG_projects_pro_list.find({'Url platform': {"$regex":url}}).count == 0:
                 #If project does not exist, then insert it
                 self.STG_projects_pro_list.insert(x)
             
             else:
                 #If project exists: Remove and insert again. New data will be explored:
-                self.STG_projects_pro_list.remove({'TITLE': name})
+                self.STG_projects_pro_list.remove({'Url platform': {"$regex":url}})
                 self.STG_projects_pro_list.insert(x)
 
     def FIN_insert_all(self, Id, wp2_id):
 
-        for x in self.STG_projects_pro_list.find({"Plat Id": str(Id)}):
+        for x in self.STG_projects_pro_list.find({"Plat Id": str(Id), "Insert date": str(date.today())}):
              
-            name = str(list(x.values())[1])
+            url = str(self.STG_projects_pro_list.find({"Plat Id": str(Id)})[0].get("Url platform"))
+
             try:
                 language = self.language(Id, x["DESCRIPTION"] )        
             except:
                 language = str(self.collection_pla.find({"Id":Id})[0].get("Language"))
 
-            if self.CSTrack_projects_descriptors.find({'TITLE': name}).count() == 0:
+            if self.CSTrack_projects_descriptors.find({'Url platform': {"$regex":url}}).count() == 0:
 
                 #If project does not exist, then insert it
                 self.CSTrack_projects_descriptors.insert_one(x)
-                self.CSTrack_projects_descriptors.update({'TITLE': name},{'$set':{'Wp2 Id':wp2_id}})   #Check!!!
-                self.CSTrack_projects_descriptors.update({'TITLE': name},{'$set':{'Language':language}})   #Check!!!
+                self.CSTrack_projects_descriptors.update({'Url platform': {"$regex":url}},{'$set':{'Wp2 Id':wp2_id}})   #Check!!!
+                self.CSTrack_projects_descriptors.update({'Url platform': {"$regex":url}},{'$set':{'Language':language}})   #Check!!!
 
             else:
 
                 #If project exists, then check if there is new information
                 for i in range(1,len(list(x.values()))):
-                    try:
+                    #try:
+                    
+                    #print(i)
+                    #print(list(x.values())[i])
+                    #print(type(list(x.values())[i]))
+                    #print(url)
+
+
+                    if 'list' in str(type(list(x.values())[i])):
                         #Go through the array and check if the information already exists
-                        for j in range(0, len(list(x.values())[i])) :
+                        for j in range(1, len(list(x.values())[i])) :
+
+                            #print(j)
+                            #print(list(x.values())[i][j])
+                            #print(str(list(x)[i]))
+                            
                             #Read all the information of each descriptor (array) and check if exist. If not, insert.
-                            self.CSTrack_projects_descriptors.update({"TITLE":name},{"$addToSet":{str(list(x)[i]):str(list(x.values())[i][j])}})
+                            self.CSTrack_projects_descriptors.update({'Url platform': {"$regex":url}},{"$addToSet":{str(list(x)[i]): list(x.values())[i][j] }})
+                            
+                    else:
+
+                        self.CSTrack_projects_descriptors.update({'Url platform': {"$regex":url}},{"$set":{str(list(x)[i]): str(list(x.values())[i]) }})
+        
+                self.CSTrack_projects_descriptors.update({'Url platform': {"$regex":url}},{"$addToSet":{"Date update":str(date.today())}})
                         
-                        self.CSTrack_projects_descriptors.update({"TITLE":name},{"$addToSet":{"Date update":str(date.today())}})
-                        
-                    except:
-                        pass
+                    #except:
+                    #    pass
 
     def Only_data_cleaning(self, Id, collection)  :
 
@@ -659,33 +672,29 @@ class Datacleaning:
 
     def Datacleaning_projects(self, Id2):
 
-        for x in self.collection_pla.find({"Id": Id2}):
+        #Clean projects from one platform by Id or all the projects stored
+        if Id2:
+            project_list = self.collection_pla.find({"Id": int(Id2)}) 
+        else:
+            project_list = self.collection_pla.find()
+
+        #Loop of list of project to be cleaned
+        for x in project_list:
             Id = list(x.values())[1]
             wp2_id = int(self.collection_pla.find({"Id":Id})[0].get("Wp2 Id"))
-            
+
             #if is informed as to be loaded
             if str(self.collection_pla.find({"Id":Id})[0].get("Load")) == 'yes' :
                 #check the number of projects and if it is a correct value. Insert it if all correct
                 self.Check_num_projects (Id) 
 
-                if self.result == 'OK':
+                #Step to create STG to clean dat
+                self.STG_insert_all(Id)
 
-                    #Step to create STG to clean dat
-                    self.STG_insert_all(Id)
+                #Clean data in STG step
+                self.Check_descriptors(Id)
 
-                    #Clean data in STG step
-                    self.Check_descriptors(Id)
+                #Insert data
+                self.FIN_insert_all(Id, wp2_id)
 
-                    #Insert data
-                    self.FIN_insert_all(Id, wp2_id)
-
-        self.collection_proj.remove({"Plat Id": str(Id2)})
-
-    
-                
-data_cleaning = Datacleaning()
-#data_cleaning.check_num_projects(9, "valores")
-data_cleaning.Datacleaning_projects(13)
-
-#With only this sentence and changing "self.STG_projects_pro_list", line 25 by other collection it cleans all data from collection.
-#data_cleaning.Only_data_cleaning(40, "db.CSTrack_projects_descriptors")
+        #self.collection_proj.remove({"Plat Id": str(Id2)})

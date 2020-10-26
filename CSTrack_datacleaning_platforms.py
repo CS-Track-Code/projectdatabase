@@ -1,16 +1,17 @@
 import time
 from pymongo import MongoClient
 from datetime import date
+from CSTrack_Mongo_conn import connection
 
-class Datacleaning:
+
+class DatacleaningPlatforms:
     def __init__(self):
         #Mongodb connection
-        #conn = MongoClient('mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false') #localhost
-        #conn = MongoClient('mongodb://root:g9k.LS00-1!JbzA8..@internal-docker.sb.upf.edu:8327/?readPreference=primary&appname=MongoDB%20Compass&ssl=false')
-        conn = MongoClient('mongodb://root:g9k.LS00-1!JbzA8..@internal-docker.sb.upf.edu:8336/?readPreference=primary&appname=MongoDB%20Compass&ssl=false')
-        
+        self.conn = MongoClient(connection())
+
+
         #Mongodb database and repository
-        db = conn.CSTrack
+        db = self.conn.CSTrack
 
         #Collections
         self.collection_pla =  db.platforms_pla_list #Platforms
@@ -29,30 +30,34 @@ class Datacleaning:
         num_projects = self.collection.find({"Id":Id}).count()
 
         #1: check if the number of projects is equal or greater to the previous number
-        
-        #Retrieve the number of projects stored in a dictionary in document
-        list_values = self.check_data_cleaning.find({"Id":1,"List":{"$elemMatch":{"Id":Id}}})[0].get("List") 
+        try:
+            #Retrieve the number of projects stored in a dictionary in document
+            list_values = self.check_data_cleaning.find({"Id":1,"List":{"$elemMatch":{"Id":Id}}})[0].get("List") 
 
-        #For each value, retrieve a tuple with the different values
-        for i in range(0, len(list_values)):
-            if list_values[i].get('Id') == Id:
-                for sub, value in list_values[i].items(): 
-                    if sub == 'number':
-                        num_stored = value            
+        
+            #For each value, retrieve a tuple with the different values
+            for i in range(0, len(list_values)):
+                if list_values[i].get('Id') == Id:
+                    for sub, value in list_values[i].items(): 
+
+                        if sub == 'number':
+                            num_stored = value   
+        except:
+            self.log_error.insert_one({"Error type": "Id not found in list of CSTrack_check_data_cleaning", "Id": Id, "date_update": str(date.today())})
+            pass
+         
 
         #Check if number of projects is greater or not of previous exctraction
         if int(num_projects) >= int(num_stored):
             #2: if it is, update the number of projects and the date_update
-            #print(f"The project with {Id} has loaded successfully")
             self.check_data_cleaning.update_one({"Id":1, "List":{"$elemMatch":{"Id":Id}}},{"$set":{"List.$.number":num_projects, "List.$.date_update": str(date.today())}})
-
-            self.result = 'OK'
             
         else:
+            self.check_data_cleaning.update_one({"Id":1, "List":{"$elemMatch":{"Id":Id}}},{"$set":{"List.$.number":num_projects, "List.$.date_update": str(date.today())}})
+
             #3: if it is not, update log error to inform that the number of projects loaded is lower than the stored in the previous execution 
             self.log_error.insert_one({"Error type": "Number of projects link from platform loaded in projects_pla_list", "Id": Id, "Error": "The project with Id " + str(Id) + " has loaded only " + str(num_stored) , "date_update": str(date.today())})
-            
-            self.result = 'NOT OK'
+ 
 
     def check_links (self, Id, Name, Url, country, wp2_id):
 
@@ -160,6 +165,11 @@ class Datacleaning:
                     #If is a correct value insert
                     self.insert_information(Id, Name, Url, country, wp2_id)
 
+            elif Id == 40:
+                if Name != 'Disclaimer' or Name != 'Supporters' or Name != 'projects' or Name != 'News7' or Name != 'Profile' :
+                    #If is a correct value insert
+                    self.insert_information(Id, Name, Url, country, wp2_id)
+
             elif Id == 63:
                 if Name != 'next ›' and Name != '‹ previous':
                     #If is a correct value insert
@@ -181,23 +191,28 @@ class Datacleaning:
         self.CSTrack_platform_projects.insert_one({'Id': Id, 'Url':Url, 'Name': Name, 'Country':country, 'load_date': str(date.today()), 'Wp2 Id': wp2_id }) #insert in mongodb database
 
 
-    def Datacleaning_platforms(self, Id2):
+    def Datacleaning_platforms(self): #, Id2
         #check the number of projects and if it is a correct value. Insert it if all correct
-        self.check_num_projects (Id2)
+        
+        for x in self.collection.find(): #{"Id": Id2}
 
-        for x in self.collection.find({"Id": Id2}):
             Id = list(x.values())[1]
             Url = list(x.values())[2]
             Name = list(x.values())[3]
             country = list(x.values())[4]
             wp2_id = int(self.collection_pla.find({"Id":Id})[0].get("Wp2 Id"))
 
-            #if is informed as to be loaded
-            if str(self.collection_pla.find({"Id":Id})[0].get("Load")) == 'yes' and self.result == 'OK' :
+            try:
 
-                #Check if the link is a correct value to insert it in the document
-                self.check_links (Id, Name, Url, country, wp2_id)
+                self.check_num_projects(Id) #Id2
+
+
+                #if is informed as to be loaded
+                if str(self.collection_pla.find({"Id":Id})[0].get("Load")) == 'yes' and str(self.collection_pla.find({"Id":Id})[0].get("Platform load")) == 'Automatic' :
+                    
+                    #Check if the link is a correct value to insert it in the document
+                    self.check_links (Id, Name, Url, country, wp2_id)
+            except:
+
+                pass
                 
-data_cleaning = Datacleaning()
-#data_cleaning.check_num_projects(9, "valores")
-data_cleaning.Datacleaning_platforms(17)
