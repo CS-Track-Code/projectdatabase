@@ -70,19 +70,19 @@ class Scraper:
         #       2. Clean project information and insert into CSTrack_platforms_projects
 
         #1. Remove projects information loaded in previous execution
-        #self.collection_proj.remove({}) 
-        #self.log_error.insert_one({"Message type": "Successfully execution", "Message": "projects_pla_list data hass been successfully removed" , "date_update": str(date.today())})
+        self.collection_proj.remove({}) 
+        self.log_error.insert_one({"Message type": "Successfully execution", "Message": "projects_pla_list data hass been successfully removed" , "date_update": str(date.today())})
 
         #2. Platforms extraction
-        #scraper = ScraperProjects()
+        scraper = ScraperProjects()
 
-        #try:
-        #    scraper.retrieve_projects('') #Write Id as a str
-        #    num_projects = self.collection_proj.find({"Insert date": str(date.today())}).count()
-        #    self.log_error.insert_one({"Message type": "Successfully execution", "Message": "Data extracted and inserted "+ str(num_projects) + " projects successfully in CSTrack_projects_descriptors" , "date_update": str(date.today())})
+        try:
+            scraper.retrieve_projects('') #Write Id as a str
+            num_projects = self.collection_proj.find({"Insert date": str(date.today())}).count()
+            self.log_error.insert_one({"Message type": "Successfully execution", "Message": "Data extracted and inserted "+ str(num_projects) + " projects successfully in CSTrack_projects_descriptors" , "date_update": str(date.today())})
 
-        #except Exception as e:
-        #    print("Hay un error", e) #Hacer un control de errores por consola + base de datos
+        except Exception as e:
+            print("Hay un error", e) #Hacer un control de errores por consola + base de datos
 
         #3. Projects data cleaning 
         data_cleaning = DatacleaningProjects()
@@ -97,6 +97,6 @@ class Scraper:
         
 
 scraper = Scraper()
-#scraper.platforms()
+scraper.platforms()
 scraper.projects()
 

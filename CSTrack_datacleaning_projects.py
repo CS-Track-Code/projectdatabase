@@ -68,12 +68,15 @@ class DatacleaningProjects:
 
 
     
-    def Check_descriptors(self, Id):
+    def Check_descriptors(self, Id, wp2_id):
 
 
         for x in self.STG_projects_pro_list.find({"Plat Id": str(Id), "Insert date": str(date.today())}):
 
             name = str(list(x.values())[1])
+
+            self.STG_projects_pro_list.update({'TITLE': {"$regex":name}},{'$set':{'Wp2 Id':wp2_id}})   #Check!!!
+
 
             try:
                 #Remove null values
@@ -83,10 +86,15 @@ class DatacleaningProjects:
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'@'}}})
 
                 #Remove *, ',' in description
-                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['*', ',', '.', ' ', ' ', '','  ', '   ', '     ', '         ']}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['*', ',', '.', ' ', ' ', '','  ', '   ', '     ', '         ',\
+                '                                                   ', '                                             ', '                                            '\
+                '                                                 ', '                                           ', '    ',  \
+                '                                            ', '    ', ', '    ]}}})
 
                 #Remove jvascript message in description
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'javascript:'}}})
+
+                #Add Wp2_id and Plat country
             
             except:
                 pass
@@ -158,12 +166,15 @@ class DatacleaningProjects:
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"WEB":{"$regex":'https://www.iedereenwetenschapper.be/over-ons'}}})
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"WEB":{"$regex":'https://www.iedereenwetenschapper.be/search-for-project'}}})
 
-                #Move category to type 
-                for i in self.STG_projects_pro_list.find({"TITLE":name}, {"WEB":1, "_id":0})[0].get("WEB") :
+                try:
+                    #Move category to type 
+                    for i in self.STG_projects_pro_list.find({"TITLE":name}, {"WEB":1, "_id":0})[0].get("WEB") :
 
-                        if '/category-overview/' in i:
-                            self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"WEB":i}})
-                            self.STG_projects_pro_list.update({"TITLE":name},{"$addToSet":{"CATEGORY":i}})
+                            if '/category-overview/' in i:
+                                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"WEB":i}})
+                                self.STG_projects_pro_list.update({"TITLE":name},{"$addToSet":{"CATEGORY":i}})
+                except:
+                    pass
 
             elif str(Id) == '111':
                 #Remove data
@@ -396,6 +407,19 @@ class DatacleaningProjects:
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'The Microverse Discover '}}}) 
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Decoding Nature Students '}}}) 
 
+            elif str(Id) == '31':      
+                #Remove data
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['           Mitforschen                   ', \
+                '           Blog                   ', '           Citizen Science                   ', '           Netzwerk                   ', \
+                '           Veranstaltungen                   ', '                         Anmelden                                 ', \
+                '                         Newsletter                   ', '                         Über uns                                 ', \
+                '                         EN                                 ', '1', '2', '3', '                       Presse                               ', \
+                '                       Impressum                               ', '                       Datenschutz                               ', \
+                '                       Disclaimer                               ', '                       Nutzungsbedingungen für Projektinitiator*innen                                '\
+                'Toggle Menu', 'Toggle Search', 'Suche', 'sofort losforschen', '4', '5', '6', '7', '8', 'Toggle Menu', 'mit App', 'Aktionszeitraum' ]}}})
+
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex": 'innen '}}})
+            
             elif str(Id) == '32':
                 #Remove data
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['HOME', 'citizenscience:germany', 'IMPRESSUM'\
@@ -599,8 +623,8 @@ class DatacleaningProjects:
     def STG_insert_all(self, Id):
 
         for x in self.collection_proj.find({"Plat Id": str(Id), "Insert date": str(date.today()) }):
-             
-            url = str(self.collection_proj.find({"Plat Id": str(Id)})[0].get("Url platform"))
+            
+            url = x["Url platform"]
 
             if self.STG_projects_pro_list.find({'Url platform': {"$regex":url}}).count == 0:
                 #If project does not exist, then insert it
@@ -611,64 +635,53 @@ class DatacleaningProjects:
                 self.STG_projects_pro_list.remove({'Url platform': {"$regex":url}})
                 self.STG_projects_pro_list.insert(x)
 
-    def FIN_insert_all(self, Id, wp2_id):
+    def FIN_insert_all(self, Id):
 
         for x in self.STG_projects_pro_list.find({"Plat Id": str(Id), "Insert date": str(date.today())}):
              
-            url = str(self.STG_projects_pro_list.find({"Plat Id": str(Id)})[0].get("Url platform"))
+            url = x["Url platform"]
+            name = x['TITLE']
 
             try:
                 language = self.language(Id, x["DESCRIPTION"] )        
             except:
                 language = str(self.collection_pla.find({"Id":Id})[0].get("Language"))
 
-            if self.CSTrack_projects_descriptors.find({'Url platform': {"$regex":url}}).count() == 0:
+            if self.CSTrack_projects_descriptors.find({'TITLE': {"$regex":name}}).count() == 0:
 
                 #If project does not exist, then insert it
                 self.CSTrack_projects_descriptors.insert_one(x)
-                self.CSTrack_projects_descriptors.update({'Url platform': {"$regex":url}},{'$set':{'Wp2 Id':wp2_id}})   #Check!!!
-                self.CSTrack_projects_descriptors.update({'Url platform': {"$regex":url}},{'$set':{'Language':language}})   #Check!!!
+                self.CSTrack_projects_descriptors.update({'TITLE': {"$regex":name}},{'$set':{'Language':language}})   #Check!!!
 
             else:
 
                 #If project exists, then check if there is new information
-                for i in range(1,len(list(x.values()))):
-                    #try:
-                    
-                    #print(i)
-                    #print(list(x.values())[i])
-                    #print(type(list(x.values())[i]))
-                    #print(url)
-
+                for i in range(2,len(list(x.values()))):
 
                     if 'list' in str(type(list(x.values())[i])):
                         #Go through the array and check if the information already exists
-                        for j in range(1, len(list(x.values())[i])) :
+                        for j in range(2, len(list(x.values())[i])) :
+                            
+                            try:
 
-                            #print(j)
-                            #print(list(x.values())[i][j])
-                            #print(str(list(x)[i]))
-                            
-                            #Read all the information of each descriptor (array) and check if exist. If not, insert.
-                            self.CSTrack_projects_descriptors.update({'Url platform': {"$regex":url}},{"$addToSet":{str(list(x)[i]): list(x.values())[i][j] }})
-                            
+                                #Read all the information of each descriptor (array) and check if exist. If not, insert.
+                                self.CSTrack_projects_descriptors.update({'TITLE': {"$regex":name}},{"$addToSet":{str(list(x)[i]): list(x.values())[i][j] }})
+                            except:
+                                pass
+
+
                     else:
-
-                        self.CSTrack_projects_descriptors.update({'Url platform': {"$regex":url}},{"$set":{str(list(x)[i]): str(list(x.values())[i]) }})
+ 
+                        try:
+                            if str(list(x)[i]) != 'Insert date':
+                                value =  self.CSTrack_projects_descriptors.find({'TITLE': {"$regex":name}})[0].get(str(list(x)[i]))
+                                self.CSTrack_projects_descriptors.update({'TITLE': {"$regex":name}},{"$set":{str(list(x)[i]): [value] }})
+                                self.CSTrack_projects_descriptors.update({'TITLE': {"$regex":name}},{"$addToSet":{str(list(x)[i]): str(list(x.values())[i]) }})
+                        except:
+                            pass
         
-                self.CSTrack_projects_descriptors.update({'Url platform': {"$regex":url}},{"$addToSet":{"Date update":str(date.today())}})
-                        
-                    #except:
-                    #    pass
-
-    def Only_data_cleaning(self, Id, collection)  :
-
-        #CHANGE COLLECTION __INIT__
-        
-        #Clean collection
-        self.Check_descriptors(str(Id))
-            
-            
+                self.CSTrack_projects_descriptors.update({'TITLE': {"$regex":name}},{"$addToSet":{"Date update": str(date.today())}})
+                                 
 
     def Datacleaning_projects(self, Id2):
 
@@ -692,9 +705,9 @@ class DatacleaningProjects:
                 self.STG_insert_all(Id)
 
                 #Clean data in STG step
-                self.Check_descriptors(Id)
+                self.Check_descriptors(Id, wp2_id)
 
                 #Insert data
-                self.FIN_insert_all(Id, wp2_id)
+                self.FIN_insert_all(Id)
 
         #self.collection_proj.remove({"Plat Id": str(Id2)})

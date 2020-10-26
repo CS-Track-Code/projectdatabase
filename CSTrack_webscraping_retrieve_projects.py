@@ -169,9 +169,9 @@ class ScraperProjects:
                             if item not in self.participants[0:]:   
                                 self.participants.append(item.get_attribute('href'))
                         else:
-                            self.checkDescriptors(item.get_attribute('href'))
+                            self.check_descriptors(item.get_attribute('href'))
                     else:
-                        self.checkDescriptors(item.get_attribute('href'))
+                        self.check_descriptors(item.get_attribute('href'))
 
         except:
             pass 
