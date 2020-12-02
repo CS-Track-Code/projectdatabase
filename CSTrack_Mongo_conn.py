@@ -1,15 +1,17 @@
+import CSTrack_connection_config  as config
 
 def connection():
         #User
-        user = 'root'
+        user = config.USER
         #Password
-        password = 'g9k.LS00-1!JbzA8..'
+        password = config.PASSWORD
         #host
-        host = 'internal-docker.sb.upf.edu'
+        host = config.HOST
         #connection string
-        connection_str = '/?readPreference=primary&appname=MongoDB%20Compass&ssl=false'
+        connection_str = config.CONNECTIONSTR
         #port
-        port = '8336' #8327 = prod
+        port = config.PORTDEV #8327 = prod
+        port_prod = config.PORTPROD
         
         #LOCALHOST
         #conn = MongoClient('mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false') #localhost
