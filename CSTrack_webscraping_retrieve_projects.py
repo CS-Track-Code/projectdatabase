@@ -31,6 +31,9 @@ class ScraperProjects:
         self.log_error = db.CSTrack_logerror #Store error for datacleaning
         self.check_data_cleaning = db.CSTrack_check_data_cleaning #Check number of projects or other conditions
 
+        self.CSTrack_projects_descriptors_NO_EU = db.CSTrack_projects_descriptors_NO_EU #Projects out EU
+
+
 
     def get_driver(self, platform_url, Id):
         #Selenium library read: Chromedriver route
@@ -396,11 +399,7 @@ class ScraperProjects:
             pass
 
         #some projects inform TITLE with "Estadísticas del evento"
-        if int(Id) == 111:
-            if "Estadísticas del evento" in self.title[1] or 'Estadísticas' in self.title[1]:
-                self.title.pop()
-                self.title.append(name)
-        elif int(Id) == 60:
+        if int(Id) == 60:
             if "Otros proyectos" in self.title[1] :
                 self.title.pop()
                 self.title.append(name)
@@ -423,13 +422,8 @@ class ScraperProjects:
     #Check text extracted conditions
     def check_descriptors(self, value):
 
-        if '@' in str(value):
-            #print(item.get_attribute('href'))
-            if value and value not in self.mail[0:] :    #if tittle is informed and is not in project list
-                self.mail.append(value)
-                self.description.append(value)
-
-        elif ('www.' in str(value) or 'http' in str(value)) and ' ' not in str(value):
+       
+        if ('www.' in str(value) or 'http' in str(value)) and ' ' not in str(value):
             #print(value)
             if value:    #if tittle is informed and is not in project list                        
                 #social media check
@@ -530,6 +524,11 @@ class ScraperProjects:
             elif any(ele in value for ele in self.web_values['values']):
                 if value not in self.web[0:]:    
                     self.web.append(value)
+            elif '@' in str(value):
+                #print(item.get_attribute('href'))
+                if value and value not in self.mail[0:] :    #if tittle is informed and is not in project list
+                    self.mail.append(value)
+                    self.description.append(value)
             else:
                 self.description.append(value)
 
@@ -597,9 +596,9 @@ class ScraperProjects:
         
         #Load projects from one platform by Id or all the projects stored in CSTrack_platforms_projects
         if Id:
-            project_list = self.CSTrack_platforms_projects.find({"Id": Id}) 
+            project_list = self.CSTrack_platforms_projects.find({"Id": int(Id), "load_date": str(date.today())}) 
         else:
-            project_list = self.CSTrack_platforms_projects.find()
+            project_list = self.CSTrack_platforms_projects.find({"load_date": str(date.today())})
 
         #CHECK IF WORK
         for x in project_list:
@@ -656,16 +655,9 @@ class ScraperProjects:
 
     def execute_process(self, Id, Url, project, name, country, Class):
 
-        #Get driver: Add ?tab=about for '111' link
-        if str(Id) == '111':
-            last_url = str(Url)+"?tab=about"
-
-            #Call def get_driver
-            self.get_driver(last_url, Id)
-        else:
-            #Call def get_driver
-            self.get_driver(Url, Id)   
-            time.sleep(5)
+        #Call def get_driver
+        self.get_driver(Url, Id)   
+        time.sleep(5)
 
 
         #Get elements and all the information for each descriptor
@@ -687,4 +679,19 @@ class ScraperProjects:
         self.driver.close()
 
 
+    def move(self):
+        for x in self.CSTrack_projects_descriptors.find({"Plat Id": "111"}): 
+                    
+            url = x["Url platform"]
+            
+                
+            #If project does not exist, then insert it
+            self.CSTrack_projects_descriptors_NO_EU.insert(x)
+            self.CSTrack_projects_descriptors.remove({'Url platform': url})
 
+
+
+if __name__ == "__main__":
+    
+    scraper = ScraperProjects()
+    scraper.retrieve_platforms ('', '') 

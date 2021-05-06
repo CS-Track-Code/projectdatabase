@@ -71,12 +71,22 @@ class DatacleaningPlatforms:
             
             elif Id == 180:
                 
-                if  Name != 'Projekter' and Name != 'Tilpas' and Name != 'Older projects' and Name != 'Log ind':
+                if  Name != 'Projekter' and Name != 'Tilpas' and Name != 'Older projects' and Name != 'Log ind' and Name != 'Log in now.':
                   
                     #If is a correct value insert
                     self.insert_information(Id, Name, Url, country, wp2_id)
 
-            
+            elif Id == 35:
+                
+                if  Name != 'Actualités' and Name != 'Agenda' and Name != 'Agenda' and Name != 'Présentation' and \
+                    Name != 'Du citoyen à la recherche scientifique' and Name != 'Contactez-nous' and Name != 'Mentions légales et crédits' and \
+                    Name != 'Plan du site' and Name != 'En savoir plus' and Name!= 'Voir toutes les vidéos' and 'Gestionnaires' not in Name and \
+                    Name != 'Pour tous' and '/actualites/' not in Url and '/agenda/' not in Url and '/media-video/' not in Url and Name != "Offres d'emploi" and \
+                    Name != 'Bibliographie' and Name != 'Accès aux données' and '.frhttp://' not in Url:
+
+                    #If is a correct value insert
+                    self.insert_information(Id, Name, Url, country, wp2_id)
+
             elif Id == 65:
                 if  Url != None :
                     #If is a correct value insert
@@ -123,7 +133,7 @@ class DatacleaningPlatforms:
                     self.insert_information(Id, Name, Url, country, wp2_id)
 
             elif Id == 128:
-                if Name != 'JOIN A PROJECT' and Name != 'Expeditions': 
+                if Name != 'JOIN A PROJECT' and Name != 'Expeditions' and '/default.aspx' in Url and Name != 'Earthwatchers': 
                     #If is a correct value insert
                     self.insert_information(Id, Name, Url, country, wp2_id)
 
@@ -133,7 +143,8 @@ class DatacleaningPlatforms:
                     and Name != 'Dialog zwischen Akteuren der Wissen­schafts­kom­mu­ni­ka­tion' and  Name != 'Projekte Romandie' and Name != 'Projekte Tessin' \
                     and Name != '2' and Name != '3' and Name != 'Home' and Name != 'Impressum' and Name != 'Suche' \
                     and Name != 'Stiftungsrat' and Name != 'Team' and Name != '#Homeoffice' and Name != 'Jahresberichte' and Name != 'Statuten' and Name != 'Logos' \
-                    and Name != 'Medienmitteilungen' and Name != 'Medienschau' and Name != 'Newsletter': 
+                    and Name != 'Medienmitteilungen' and Name != 'Medienschau' and Name != 'Newsletter' and Name != 'BFH Zentrum Energiespeicherung' \
+                    and "Das BFH-Zentrum Energiespeicherung und Science et Cité laden zum spielerischen" not in Name: 
                     
                     #If is a correct value insert
                     self.insert_information(Id, Name, Url, country, wp2_id)
@@ -144,7 +155,7 @@ class DatacleaningPlatforms:
                     self.insert_information(Id, Name, Url, country, wp2_id)
 
             elif Id == 124:
-                if Name != 'Read the blog' and Name != 'Citizen science' :
+                if Name != 'Read the blog' and Name != 'Citizen science' and ('/content/nhmwww/en/home/' not in Url):
 
                     #If is a correct value insert
                     self.insert_information(Id, Name, Url, country, wp2_id)

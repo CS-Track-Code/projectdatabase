@@ -39,7 +39,7 @@ class DatacleaningProjects:
     def Check_num_projects(self, Id):
 
         #0: Get the number of projects loaded
-        num_projects = self.collection_proj.find({"Plat Id":Id, "Insert date": str(date.today())}).count()
+        num_projects = self.collection_proj.find({"Plat Id":Id}).count() #str(date.today())
 
         #1: check if the number of projects is equal or greater to the previous number
         
@@ -57,11 +57,11 @@ class DatacleaningProjects:
         if int(num_projects) >= int(num_stored):
             #2: if it is, update the number of projects and the date_update
             #print(f"The project with {Id} has loaded successfully")
-            self.check_data_cleaning.update_one({"Id":2, "List":{"$elemMatch":{"Id":Id}}},{"$set":{"List.$.number":num_projects, "List.$.date_update": str(date.today())}})
+            self.check_data_cleaning.update_one({"Id":2, "List":{"$elemMatch":{"Id":Id}}},{"$set":{"List.$.number":num_projects, "List.$.date_update": str(date.today())}}) #str(date.today())
 
 
         else:
-            self.check_data_cleaning.update_one({"Id":2, "List":{"$elemMatch":{"Id":Id}}},{"$set":{"List.$.number":num_projects, "List.$.date_update": str(date.today())}})
+            self.check_data_cleaning.update_one({"Id":2, "List":{"$elemMatch":{"Id":Id}}},{"$set":{"List.$.number":num_projects, "List.$.date_update": str(date.today())}}) #str(date.today())
 
             #3: if it is not, update log error to inform that the number of projects loaded is lower than the stored in the previous execution 
             self.log_error.insert_one({"Error type": "Number of projects with descriptors in projects_pro_list", "Id": Id, "Error": "The project with Id " + str(Id) + " has loaded only " + str(num_stored) + " check the URL ", "date_update": str(date.today())})
@@ -71,30 +71,41 @@ class DatacleaningProjects:
     def Check_descriptors(self, Id, wp2_id):
 
 
-        for x in self.STG_projects_pro_list.find({"Plat Id": str(Id), "Insert date": str(date.today())}):
+        for x in self.STG_projects_pro_list.find({"Plat Id": str(Id), "Insert date": str(date.today())}): #, 
 
             name = str(list(x.values())[1])
+            Url = str(x["Url platform"])
 
-            self.STG_projects_pro_list.update({'TITLE': {"$regex":name}},{'$set':{'Wp2 Id':wp2_id}})   #Check!!!
+            try:
 
+                self.STG_projects_pro_list.update({'TITLE': {"$regex": name}},{'$set':{'Wp2 Id': str(wp2_id)}})   #Check!!!
+            except:
+                pass
 
             try:
                 #Remove null values
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":""}})
 
                 #Remove @ in description
-                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'@'}}})
+                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'mailto:'}}})
 
                 #Remove *, ',' in description
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":['*', ',', '.', ' ', ' ', '','  ', '   ', '     ', '         ',\
                 '                                                   ', '                                             ', '                                            '\
                 '                                                 ', '                                           ', '    ',  \
-                '                                            ', '    ', ', '    ]}}})
+                '                                            ', '    ', ', ', '*', 'javascript:', '-'    ]}}})
 
                 #Remove jvascript message in description
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'javascript:'}}})
 
-                #Add Wp2_id and Plat country
+                #Remove mailto: text
+                for i in self.STG_projects_pro_list.find({"MAIL": {'$regex': "mailto:"}, "Insert date": str(date.today())}, {"_id":0}) :
+                    for x in i['MAIL']:
+                        if 'mailto:' in x:
+                            self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"MAIL":x}})
+                            x_replaced = x.replace("%20", "")
+                            self.STG_projects_pro_list.update({"TITLE":name},{"$addToSet":{"MAIL":x_replaced}})
+
             
             except:
                 pass
@@ -173,160 +184,6 @@ class DatacleaningProjects:
                             if '/category-overview/' in i:
                                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"WEB":i}})
                                 self.STG_projects_pro_list.update({"TITLE":name},{"$addToSet":{"CATEGORY":i}})
-                except:
-                    pass
-
-            elif str(Id) == '111':
-                #Remove data
-                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$in":[' Acerca de ', ' Ayuda ', ' Foro ', ' Prensa ', ' Nuestro blog ', \
-                    ' Directrices de la comunidad ', ' Términos del servicio ', ' Privacidad ', 'Enero', '/EDT/', '/Febrero/', '/Marzo/', '/Abril/', '/Mayo/', '/Junio/', '/Juloi/', '/Agosto/', '/Septiembre/', '/Octubre/'\
-                    '/Noviembre/', '/Diciembre/', ' Explora ', '   Comunidad    Personas Proyectos Artículos en el diario Foro   ', 'Personas', 'Proyectos', 'Artículos en el diario', 'Foro', \
-                    '   Más    Información sobre taxones Guías Lugares Estadísticas del sitio  Ayuda   ', 'Información sobre taxones', 'Guías', 'Lugares', 'Estadísticas del sitio',\
-                    'Ayuda', ' Acceder o Crear una cuenta ', ' العربية ', ' български ', ' Breton ', ' Català ', ' český ', ' český ', ' Dansk ', ' Deutsch ', ' Ελληνικά ' ,\
-                    ' English ', ' Esperanto ', ' Español  ', ' Español ', ' Español (Argentina) ', ' Español (México) ', ' Eesti ', ' Euskara ', ' suomi ', ' français ', ' Français (Canada) ',\
-                    ' Galego ', ' עברית ', ' bahasa Indonesia ', ' Italiano ', ' 日本語 ', ' 한국어 ', ' Lëtzebuergesch ', ' Lietuvių ', ' македонски ', ' Norsk Bokmål ',\
-                    ' Nederlands ', ' Occitan ', ' Polski ', ' Português ', ' Português (Brasil) ', ' Русский ', ' Slovenský ', ' Shqip ', ' Svenska ', ' Türkçe ', ' 简体中文 ',\
-                    ' 繁體中文 ', '¡Ayúdanos a traducir!', 'Clase', '      Términos & Reglas | Unirse a este proyecto    ', 'Datos de mapas ©2020', 'Capas', 'Toggle Dropdown'\
-                    'Necesita ', '2', '1', 'rado', 'nv.', '3' , '»', '   Desconocido  ', 'Subfamilia', 'Necesita ', ' ¿Esto es inapropiado, spam u ofensivo?  Agregar una marca  '\
-                    '41', 'Toggle Dropdown', 'Género', 'Reino', 'excepto', 'orden', '0', '13', 'comments', '7', 'Orden', '4', '113', '67', 'Familia', '5', 'Datos de mapas ©2020 Google'\
-                    '9', '10', '41', '28', 'comment', 'Datos de mapas ©2020 Google, INEGI', '25', '46', '185', '17', '6', '25','4','11']}}})
-
-                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'        '}}})
-                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'      Términos & Reglas | Unirse a este proyecto    '}}})
-                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'      '}}})
-                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Acerca de'}}})
-                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Ayuda'}}})
-                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Foro'}}})
-                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Prensa'}}})
-                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Nuestro blog'}}})
-                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Directrices de la comunidad'}}})
-                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Términos del servicio'}}})
-                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Privacidad'}}})
-                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Proyectoscualquiera'}}})
-                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Grado de calidadcualquiera'}}})
-                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Clasificacióncualquiera'}}})
-                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'¿Esto es inapropiado, spam u ofensivo?'}}})
-                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'(En algún lugar...)'}}})
-                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Datos de mapas ©2020  Imágenes ©2020 , Maxar Technologies, USDA Farm Service Agency'}}})
-                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'ssp.'}}})
-                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'Privacidad'}}})
-                self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'más ↓'}}})
-
-
-                #GEOGRAPHICAL LOCATION
-                try: 
-                    #Remove text from list
-                    for i in self.STG_projects_pro_list.find({"TITLE":name}, {"GEOGRAPHICAL LOCATION":1, "_id":0})[0].get("GEOGRAPHICAL LOCATION") :
-                        #Remove previous data
-                        self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"GEOGRAPHICAL LOCATION":i}})
-
-                        #Remove text and insert in list 
-                        text = i.replace('Ubicación', '')
-                        text = text.replace(' : ', '')
-                        
-                        self.STG_projects_pro_list.update({"TITLE":name},{"$addToSet":{"GEOGRAPHICAL LOCATION":text.replace('cualquiera', 'any')}})
-                        
-                        
-                except:
-                    pass
-
-                #DEVELOPMENT TIME
-                try: 
-                    #Remove text from list
-                    for i in self.STG_projects_pro_list.find({"TITLE":name}, {"DEVELOPMENT TIME":1, "_id":0})[0].get("DEVELOPMENT TIME") :
-                        
-                        #Remove previous data
-                        self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DEVELOPMENT TIME":i}})
-
-                        #Remove text and insert in list 
-                        text = i.replace('Fecha', '')
-                        text = text.replace(' : ', '')
-                         
-                        self.STG_projects_pro_list.update({"TITLE":name},{"$addToSet":{"DEVELOPMENT TIME":text.replace('cualquiera', 'any')}})
-                        
-                        
-                except:
-                    pass
-
-                #TOPICS
-                try: 
-                    #Remove text from list
-                    for i in self.STG_projects_pro_list.find({"TITLE":name}, {"TOPICS":1, "_id":0})[0].get("TOPICS") :
-                        
-                        #Remove previous data
-                        self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"TOPICS":i}})
-                        
-                        #Remove text and insert in list 
-                        text =i.replace('Taxones', '')
-                        text = text.replace(' : ', '')
-                         
-                        self.STG_projects_pro_list.update({"TITLE":name},{"$addToSet":{"TOPICS":text.replace('cualquiera', 'any')}})
-                        
-                        
-                except:
-                    pass
-
-                #MAIN PROGRAM OR PERSON IN CHARGE
-                try: 
-                    #Remove text from list
-                    for i in self.STG_projects_pro_list.find({"TITLE":name}, {"MAIN PROGRAM OR PERSON IN CHARGE":1, "_id":0})[0].get("MAIN PROGRAM OR PERSON IN CHARGE") :
-                        
-                        #Remove previous data
-                        self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"MAIN PROGRAM OR PERSON IN CHARGE":i}})
-
-                        #Remove text and insert in list
-                        if 'Creado por:' in i :
-                            text = i.replace('Creado por:', '')
-                            text = text.replace(' : ', '')
-
-                        elif 'Administradores de proyecto:' in i :
-                            text =i.replace('Administradores de proyecto:', '')
-                            text = text.replace(' : ', '')
-
-                        elif 'Todos los taxones' in i:
-                            self.STG_projects_pro_list.update({"TITLE":name},{"$addToSet":{"TOPICS": 'All taxa'}})
-                            pass
-                        
-                        text = text.replace('cualquiera', 'any') 
-                        
-                        self.STG_projects_pro_list.update({"TITLE":name},{"$addToSet":{"MAIN PROGRAM OR PERSON IN CHARGE": text}})
-
-                except:
-                    pass
-
-                #PARTICIPANTS PROFILE
-                try: 
-                    #Remove text from list
-                    for i in self.STG_projects_pro_list.find({"TITLE":name}, {"PARTICIPANTS PROFILE":1, "_id":0})[0].get("PARTICIPANTS PROFILE") :
-                        
-                        #Remove previous data
-                        self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"PARTICIPANTS PROFILE":i}})
-
-                        #Remove text and insert in list 
-                        text =i.replace('Usuarios', '')
-                        text = text.replace(' : ', '')
-                        
-                        if text:
-                            self.STG_projects_pro_list.update({"TITLE":name},{"$addToSet":{"PARTICIPANTS PROFILE":text.replace('cualquiera', 'any')}})  
-                        
-                except:
-                    pass
-                
-                #TOOLS AND MATERIALS
-                try: 
-                    #Remove text from list
-                    for i in self.STG_projects_pro_list.find({"TITLE":name}, {"TOOLS AND MATERIALS":1, "_id":0})[0].get("TOOLS AND MATERIALS") :
-                        
-                        #Remove previous data
-                        self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"TOOLS AND MATERIALS":i}})
-                        
-                        #Remove text and insert in list 
-                        text =i.replace('Tipo de medios', '')
-                        text = text.replace(' : ', '')
-                        
-                        self.STG_projects_pro_list.update({"TITLE":name},{"$addToSet":{"TOOLS AND MATERIALS":text.replace('cualquiera', 'any')}})
-                        
-                        
                 except:
                     pass
 
@@ -568,6 +425,9 @@ class DatacleaningProjects:
                 self.STG_projects_pro_list.update_one({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex": 'DESCRIPTION '}}})
                 self.STG_projects_pro_list.update_one({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex": ' on Twitter'}}})
                 self.STG_projects_pro_list.update_one({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex": ' on Facebook'}}})
+                self.STG_projects_pro_list.update_one({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex": ' people are talking about '}}})
+                self.STG_projects_pro_list.update_one({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex": 'No one is talking about '}}})
+                self.STG_projects_pro_list.update_one({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex": '1 person is talking about'}}})
 
                 #Tools and materials move to descriptor
                 try:
@@ -622,36 +482,50 @@ class DatacleaningProjects:
                 
     def STG_insert_all(self, Id):
 
-        for x in self.collection_proj.find({"Plat Id": str(Id), "Insert date": str(date.today()) }):
-            
-            url = x["Url platform"]
+        for x in self.collection_proj.find({"Plat Id": str(Id), "Insert date": str(date.today())}): #, "Insert date": str(date.today()) 
 
-            if self.STG_projects_pro_list.find({'Url platform': {"$regex":url}}).count == 0:
+            title = x["TITLE"]
+
+            #Special character ( ) to be removed
+            if title.find("("):
+                start = title.find("(")
+                end = title.find(")")
+                if start != -1 and end != -1:
+                    title = title[:start-1]
+
+            if self.STG_projects_pro_list.find({'TITLE': {"$regex":title}}).count == 0:
                 #If project does not exist, then insert it
+
                 self.STG_projects_pro_list.insert(x)
             
             else:
                 #If project exists: Remove and insert again. New data will be explored:
-                self.STG_projects_pro_list.remove({'Url platform': {"$regex":url}})
+                self.STG_projects_pro_list.remove({'TITLE': {"$regex":title}})
                 self.STG_projects_pro_list.insert(x)
 
     def FIN_insert_all(self, Id):
 
-        for x in self.STG_projects_pro_list.find({"Plat Id": str(Id), "Insert date": str(date.today())}):
+        for x in self.STG_projects_pro_list.find({"Plat Id": str(Id), "Insert date": str(date.today())}):#, "Insert date": str(date.today())
              
-            url = x["Url platform"]
-            name = x['TITLE']
-
+            title = x["TITLE"]
+            
+            #Special character ( ) to be removed
+            if title.find("("):
+                start = title.find("(")
+                end = title.find(")")
+                if start != -1 and end != -1:
+                    title = title[:start-1]
+            
             try:
                 language = self.language(Id, x["DESCRIPTION"] )        
             except:
                 language = str(self.collection_pla.find({"Id":Id})[0].get("Language"))
 
-            if self.CSTrack_projects_descriptors.find({'TITLE': {"$regex":name}}).count() == 0:
+            if self.CSTrack_projects_descriptors.find({'TITLE': {"$regex":title}}).count() == 0: #Url platform': {"$regex":url}
 
                 #If project does not exist, then insert it
                 self.CSTrack_projects_descriptors.insert_one(x)
-                self.CSTrack_projects_descriptors.update({'TITLE': {"$regex":name}},{'$set':{'Language':language}})   #Check!!!
+                self.CSTrack_projects_descriptors.update({'TITLE': {"$regex":title}},{'$set':{'Language':language}})   #Check!!!
 
             else:
 
@@ -660,12 +534,11 @@ class DatacleaningProjects:
 
                     if 'list' in str(type(list(x.values())[i])):
                         #Go through the array and check if the information already exists
-                        for j in range(2, len(list(x.values())[i])) :
+                        for j in range(1, len(list(x.values())[i])) :
                             
                             try:
-
                                 #Read all the information of each descriptor (array) and check if exist. If not, insert.
-                                self.CSTrack_projects_descriptors.update({'TITLE': {"$regex":name}},{"$addToSet":{str(list(x)[i]): list(x.values())[i][j] }})
+                                self.CSTrack_projects_descriptors.update({'TITLE': {"$regex":title}},{"$addToSet":{str(list(x)[i]): str(list(x.values())[i][j]) }})
                             except:
                                 pass
 
@@ -673,15 +546,29 @@ class DatacleaningProjects:
                     else:
  
                         try:
+
                             if str(list(x)[i]) != 'Insert date':
-                                value =  self.CSTrack_projects_descriptors.find({'TITLE': {"$regex":name}})[0].get(str(list(x)[i]))
-                                self.CSTrack_projects_descriptors.update({'TITLE': {"$regex":name}},{"$set":{str(list(x)[i]): [value] }})
-                                self.CSTrack_projects_descriptors.update({'TITLE': {"$regex":name}},{"$addToSet":{str(list(x)[i]): str(list(x.values())[i]) }})
+                                value =  self.CSTrack_projects_descriptors.find({'TITLE': {"$regex":title}})[0].get(str(list(x)[i]))
+                                self.CSTrack_projects_descriptors.update({'TITLE': {"$regex":title}},{"$set":{str(list(x)[i]): value }})
+                                self.CSTrack_projects_descriptors.update({'TITLE': {"$regex":title}},{"$addToSet":{str(list(x)[i]): str(list(x.values())[i]) }})
                         except:
                             pass
         
-                self.CSTrack_projects_descriptors.update({'TITLE': {"$regex":name}},{"$addToSet":{"Date update": str(date.today())}})
-                                 
+                self.CSTrack_projects_descriptors.update({'TITLE': {"$regex":title}},{"$addToSet":{"Date update": str(date.today())}})#str(date.today())
+
+
+    def prueba(self, Id, wp2_id):
+
+        for x in self.STG_projects_pro_list.find({"Plat Id": str(Id), "Insert date": str(date.today())}): #, "Insert date": str(date.today())
+
+            name = str(list(x.values())[1])
+            Url = str(x["Url platform"])
+
+            try:
+
+                self.STG_projects_pro_list.update({'TITLE': {"$regex": name}},{'$set':{'Wp2 Id': str(wp2_id)}})   #Check!!!
+            except:
+                pass
 
     def Datacleaning_projects(self, Id2):
 
@@ -689,7 +576,8 @@ class DatacleaningProjects:
         if Id2:
             project_list = self.collection_pla.find({"Id": int(Id2)}) 
         else:
-            project_list = self.collection_pla.find()
+            project_list = self.collection_pla.find({"Projects load": "Automatic", "Load": "yes"})
+
 
         #Loop of list of project to be cleaned
         for x in project_list:
@@ -698,6 +586,7 @@ class DatacleaningProjects:
 
             #if is informed as to be loaded
             if str(self.collection_pla.find({"Id":Id})[0].get("Load")) == 'yes' :
+
                 #check the number of projects and if it is a correct value. Insert it if all correct
                 self.Check_num_projects (Id) 
 
@@ -711,3 +600,9 @@ class DatacleaningProjects:
                 self.FIN_insert_all(Id)
 
         #self.collection_proj.remove({"Plat Id": str(Id2)})
+
+
+if __name__ == "__main__":
+
+    scraper = DatacleaningProjects()
+    scraper.Datacleaning_projects('')

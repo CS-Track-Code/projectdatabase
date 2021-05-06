@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from datetime import date
 from langdetect import detect
-
+from webdriver_manager.chrome import ChromeDriverManager
 
 from pymongo import MongoClient
 from CSTrack_Mongo_conn import connection
@@ -294,3 +294,7 @@ class ScraperPlatforms:
                 else:
                     continue    #if not, continue
 
+if __name__ == "__main__":
+     
+    scraper = ScraperPlatforms()
+    scraper.retrieve_platforms ('', '') 
