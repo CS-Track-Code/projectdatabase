@@ -37,8 +37,8 @@ class Scraper:
         #       3. Clean platform projects and insert into CSTrack_platforms_projects
 
         #1. Remove platform projects loaded in previous execution
-        self.collection.remove({}) 
-        self.log_error.insert_one({"Message type": "Successfully execution", "Message": "projects_pla_list data has been successfully removed" , "date_update": str(date.today())})
+        #self.collection.remove({}) 
+        #self.log_error.insert_one({"Message type": "Successfully execution", "Message": "projects_pla_list data has been successfully removed" , "date_update": str(date.today())})
 
 
         #2. Platforms extraction
@@ -53,15 +53,15 @@ class Scraper:
             self.log_error.insert_one({"Message type": "Error execution", "Message": "Error platform extraction in projects_pla_list" + str(e) , "date_update": str(date.today())})
 
         #3. Platforms data cleaning
-        #data_cleaning = DatacleaningPlatforms()
+        data_cleaning = DatacleaningPlatforms()
 
-        #try:
-        #    data_cleaning.Datacleaning_platforms()
-        #    num_projects = self.CSTrack_platforms_projects.find({"load_date": str(date.today())}).count()
-        #    self.log_error.insert_one({"Message type": "Successfully execution", "Message": "Inserted "+ str(num_projects) + " projects successfully in CSTrack_platforms_projects" , "date_update": str(date.today())})
+        try:
+            data_cleaning.Datacleaning_platforms()
+            num_projects = self.CSTrack_platforms_projects.find({"load_date": str(date.today())}).count()
+            self.log_error.insert_one({"Message type": "Successfully execution", "Message": "Inserted "+ str(num_projects) + " projects successfully in CSTrack_platforms_projects" , "date_update": str(date.today())})
         
-        #except Exception as e:
-        #    self.log_error.insert_one({"Message type": "Error execution", "Message": "Error platform inserting into CSTrack_platforms_projects" + str(e)  , "date_update": str(date.today())})
+        except Exception as e:
+            self.log_error.insert_one({"Message type": "Error execution", "Message": "Error platform inserting into CSTrack_platforms_projects" + str(e)  , "date_update": str(date.today())})
 
     def projects(self):
 
@@ -70,8 +70,8 @@ class Scraper:
         #       2. Clean project information and insert into CSTrack_platforms_projects
 
         #1. Remove projects information loaded in previous execution
-        self.collection_proj.remove({}) 
-        self.log_error.insert_one({"Message type": "Successfully execution", "Message": "projects_pla_list data hass been successfully removed" , "date_update": str(date.today())})
+        #self.collection_proj.remove({}) 
+        #self.log_error.insert_one({"Message type": "Successfully execution", "Message": "projects_pla_list data hass been successfully removed" , "date_update": str(date.today())})
 
         #2. Platforms extraction
         scraper = ScraperProjects()
@@ -97,6 +97,6 @@ class Scraper:
         
 
 scraper = Scraper()
-scraper.platforms()
-#scraper.projects()
+#scraper.platforms()
+scraper.projects()
 
