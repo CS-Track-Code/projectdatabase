@@ -604,17 +604,17 @@ class ScraperProjects:
         for x in project_list:
             
             #Project platform Id
-            Id = list(x.values())[1]
+            Id = x['Id']
 
             if str(self.collection_pla.find({"Id":Id})[0].get("Load")) == 'yes' and str(self.collection_pla.find({"Id":Id})[0].get("Projects load")) == 'Automatic':
                 
                 project = self.collection_pla.find({"Id": Id})[0]
 
                 #Platforms projects elements
-                Url = list(x.values())[2]
-                name = list(x.values())[3]
-                country = list(x.values())[4]
-                wp2_id = list(x.values())[6]
+                Url = x['Url']
+                name = x['Name']
+                country = x['Country']
+                wp2_id = x['Wp2 Id']
                 self.initial_url = Url
 
                 #Identify language
@@ -694,4 +694,4 @@ class ScraperProjects:
 if __name__ == "__main__":
     
     scraper = ScraperProjects()
-    scraper.retrieve_platforms ('', '') 
+    scraper.retrieve_projects('74')

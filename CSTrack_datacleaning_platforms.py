@@ -207,10 +207,11 @@ class DatacleaningPlatforms:
         
         for x in self.collection.find(): #{"Id": Id2}
 
-            Id = list(x.values())[1]
-            Url = list(x.values())[2]
-            Name = list(x.values())[3]
-            country = list(x.values())[4]
+            Id = x['Id']
+            Url = x['Url']
+            Name = x['Name']
+            country = x['Country']
+
             wp2_id = int(self.collection_pla.find({"Id":Id})[0].get("Wp2 Id"))
 
             try:
@@ -227,3 +228,8 @@ class DatacleaningPlatforms:
 
                 pass
                 
+
+if __name__ == "__main__":
+
+    data_cleaning = DatacleaningPlatforms()
+    data_cleaning.Datacleaning_platforms()

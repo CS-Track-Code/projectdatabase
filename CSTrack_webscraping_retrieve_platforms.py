@@ -253,48 +253,36 @@ class ScraperPlatforms:
 
         self.execution_type = execution_type
 
+        #Get all the projects from the collection. If Id or If not
         if Id :
-            for x in self.collection_pla.find({"Id": Id}):
-                
-                Id = list(x.values())[1]
-                platform_url = list(x.values())[3]
-                annexed = list(x.values())[4]
-                check = list(x.values())[5]
-                class_name = list(x.values())[6]
 
-                if execution_type == 'manually':
-                    button_name = list(x.values())[7]
-                else:
-                    button_name = ''
-
-                country = list(x.values())[8]
-
-                #if is informed as to be loaded
-                if list(x.values())[10] == 'yes' and list(x.values())[11] == 'Automatic':
-                    self.get_Cs_Platform_Projects(Id, platform_url, annexed, check, class_name, button_name, country)
-
+            list_values = self.collection_pla.find({"Id": Id})
         else:
-            for x in self.collection_pla.find() :
-                Id = list(x.values())[1]
-                platform_url = list(x.values())[3]
-                annexed = list(x.values())[4]
-                check = list(x.values())[5]
-                class_name = list(x.values())[6]
+            list_values = self.collection_pla.find({})
+        
+        #Go through all values
+        for x in list_values:
+            #Get all elements from collection  
+            Id = x['Id']
+            platform_url = x['Url']
+            annexed = x['annexed']
+            check = x['check']
+            class_name = x['className']
 
-                if execution_type == 'manually':
-                    button_name = list(x.values())[7]
-                else:
-                    button_name = ''
+            if execution_type == 'manually':
+                button_name = x['buttonName']
+            else:
+                button_name = ''
 
-                country = list(x.values())[8]
+            country = x['Country']
 
-                #if is informed as to be loaded
-                if list(x.values())[10] == 'yes' and list(x.values())[11] == 'Automatic' :
-                    self.get_Cs_Platform_Projects(Id, platform_url, annexed, check, class_name, button_name, country)
-                else:
-                    continue    #if not, continue
+            #if is informed as to be loaded with "yes" then execute the process
+            if x['Load'] == 'yes' and x['Platform load'] == 'Automatic':
+                self.get_Cs_Platform_Projects(Id, platform_url, annexed, check, class_name, button_name, country)
+            else:
+                continue    #if not, continue
 
 if __name__ == "__main__":
      
     scraper = ScraperPlatforms()
-    scraper.retrieve_platforms ('', '') 
+    scraper.retrieve_platforms (77, '') 

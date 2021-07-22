@@ -57,21 +57,21 @@ class DatacleaningProjects:
         if int(num_projects) >= int(num_stored):
             #2: if it is, update the number of projects and the date_update
             #print(f"The project with {Id} has loaded successfully")
-            self.check_data_cleaning.update_one({"Id":2, "List":{"$elemMatch":{"Id":Id}}},{"$set":{"List.$.number":num_projects, "List.$.date_update": str(date.today())}}) #str(date.today())
+            self.check_data_cleaning.update_one({"Id":2, "List":{"$elemMatch":{"Id":Id}}},{"$set":{"List.$.number":num_projects, "List.$.date_update": "2021-05-14"}}) #str(date.today())
 
 
         else:
-            self.check_data_cleaning.update_one({"Id":2, "List":{"$elemMatch":{"Id":Id}}},{"$set":{"List.$.number":num_projects, "List.$.date_update": str(date.today())}}) #str(date.today())
+            self.check_data_cleaning.update_one({"Id":2, "List":{"$elemMatch":{"Id":Id}}},{"$set":{"List.$.number":num_projects, "List.$.date_update": "2021-05-14"}}) #str(date.today())
 
             #3: if it is not, update log error to inform that the number of projects loaded is lower than the stored in the previous execution 
-            self.log_error.insert_one({"Error type": "Number of projects with descriptors in projects_pro_list", "Id": Id, "Error": "The project with Id " + str(Id) + " has loaded only " + str(num_stored) + " check the URL ", "date_update": str(date.today())})
+            self.log_error.insert_one({"Error type": "Number of projects with descriptors in projects_pro_list", "Id": Id, "Error": "The project with Id " + str(Id) + " has loaded only " + str(num_stored) + " check the URL ", "date_update": "2021-05-14" }) #str(date.today())
 
 
     
     def Check_descriptors(self, Id, wp2_id):
 
 
-        for x in self.STG_projects_pro_list.find({"Plat Id": str(Id), "Insert date": str(date.today())}): #, 
+        for x in self.STG_projects_pro_list.find({"Plat Id": str(Id), "Insert date": str(date.today()) }): #str(date.today())
 
             name = str(list(x.values())[1])
             Url = str(x["Url platform"])
@@ -99,7 +99,7 @@ class DatacleaningProjects:
                 self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"DESCRIPTION":{"$regex":'javascript:'}}})
 
                 #Remove mailto: text
-                for i in self.STG_projects_pro_list.find({"MAIL": {'$regex': "mailto:"}, "Insert date": str(date.today())}, {"_id":0}) :
+                for i in self.STG_projects_pro_list.find({"MAIL": {'$regex': "mailto:"}, "Insert date": str(date.today()) }, {"_id":0}) : #str(date.today())
                     for x in i['MAIL']:
                         if 'mailto:' in x:
                             self.STG_projects_pro_list.update({"TITLE":name},{"$pull":{"MAIL":x}})
@@ -482,7 +482,7 @@ class DatacleaningProjects:
                 
     def STG_insert_all(self, Id):
 
-        for x in self.collection_proj.find({"Plat Id": str(Id), "Insert date": str(date.today())}): #, "Insert date": str(date.today()) 
+        for x in self.collection_proj.find({"Plat Id": str(Id), "Insert date": str(date.today()) }): #, "Insert date": str(date.today()) 
 
             title = x["TITLE"]
 
@@ -505,7 +505,7 @@ class DatacleaningProjects:
 
     def FIN_insert_all(self, Id):
 
-        for x in self.STG_projects_pro_list.find({"Plat Id": str(Id), "Insert date": str(date.today())}):#, "Insert date": str(date.today())
+        for x in self.STG_projects_pro_list.find({"Plat Id": str(Id), "Insert date": str(date.today()) }):#, "Insert date": str(date.today())
              
             title = x["TITLE"]
             
@@ -554,12 +554,12 @@ class DatacleaningProjects:
                         except:
                             pass
         
-                self.CSTrack_projects_descriptors.update({'TITLE': {"$regex":title}},{"$addToSet":{"Date update": str(date.today())}})#str(date.today())
+                self.CSTrack_projects_descriptors.update({'TITLE': {"$regex":title}},{"$addToSet":{"Date update": "2021-05-14"}})#str(date.today())
 
 
     def prueba(self, Id, wp2_id):
 
-        for x in self.STG_projects_pro_list.find({"Plat Id": str(Id), "Insert date": str(date.today())}): #, "Insert date": str(date.today())
+        for x in self.STG_projects_pro_list.find({"Plat Id": str(Id), "Insert date": str(date.today()) }): #, "Insert date": str(date.today())
 
             name = str(list(x.values())[1])
             Url = str(x["Url platform"])
@@ -605,4 +605,4 @@ class DatacleaningProjects:
 if __name__ == "__main__":
 
     scraper = DatacleaningProjects()
-    scraper.Datacleaning_projects('')
+    scraper.Datacleaning_projects('17')

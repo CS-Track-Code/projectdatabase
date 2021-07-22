@@ -76,30 +76,30 @@ class Scraper:
         #       5. Clean project information and insert into CSTrack_platforms_projects
 
         #1. Remove projects information loaded in previous execution
-        self.collection_proj.remove({}) 
-        self.log_error.insert_one({"Message type": "Successfully execution", "Message": "projects_pla_list data hass been successfully removed" , "date_update": str(date.today())})
+        #self.collection_proj.remove({}) 
+        #self.log_error.insert_one({"Message type": "Successfully execution", "Message": "projects_pla_list data hass been successfully removed" , "date_update": str(date.today())})
 
         #2. Platforms extraction
-        scraper = ScraperProjects()
+        #scraper = ScraperProjects()
 
-        try:
-            scraper.retrieve_projects('') #Write Id as a int or ''
+        #try:
+        #    scraper.retrieve_projects('') #Write Id as a int or ''
             
-        except Exception as e:
-            print("Hay un error", e) #Hacer un control de errores por consola + base de datos
+        #except Exception as e:
+        #    print("Hay un error", e) #Hacer un control de errores por consola + base de datos
 
         #3. API extraction
-        API_projects = APIProjects()
+        #API_projects = APIProjects()
     
-        try:
-            API_projects.API_retrieve_projects() #Write Id as a str
+        #try:
+        #    API_projects.API_retrieve_projects() #Write Id as a str
             
-        except Exception as e:
-            print("Hay un error", e) #Hacer un control de errores por consola + base de datos
+        #except Exception as e:
+        #    print("Hay un error", e) #Hacer un control de errores por consola + base de datos
 
         #4. Number of projects extracted
-        num_projects = self.collection_proj.find({"Insert date": str(date.today())}).count()
-        self.log_error.insert_one({"Message type": "Successfully execution", "Message": "Data extracted and inserted "+ str(num_projects) + " projects successfully in CSTrack_projects_descriptors" , "date_update": str(date.today())})
+        #num_projects = self.collection_proj.find({"Insert date": str(date.today())}).count()
+        #self.log_error.insert_one({"Message type": "Successfully execution", "Message": "Data extracted and inserted "+ str(num_projects) + " projects successfully in CSTrack_projects_descriptors" , "date_update": str(date.today())})
 
 
         #5. Projects data cleaning 
