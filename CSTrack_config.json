@@ -1,0 +1,288 @@
+[{
+  "_id": {
+    "$oid": "5eaa7adb474c0ad1c81cd37b"
+  },
+  "def": "Dictionary with configuration parameters"
+},{
+  "_id": {
+    "$oid": "5eaa7c36474c0ad1c81cd37c"
+  },
+  "Id": 6,
+  "Name": "Social media values",
+  "values": [
+    "twitter",
+    "naver",
+    "facebook",
+    "youtube",
+    "instagram",
+    "blog.",
+    "PERFILES DEL PROYECTO EN REDES SOCIALES:",
+    "REDES SOCIALES:",
+    "PERFILES EN REDES SOCIALES:",
+    "flickr"
+  ]
+},{
+  "_id": {
+    "$oid": "5eb51a7a69c62c46187847ec"
+  },
+  "Id": 8,
+  "Name": "Other online resources",
+  "values": [
+    ".pdf",
+    "OTROS RECURSOS DEL PROYECTO:",
+    "zoom.",
+    "Desktop:"
+  ]
+},{
+  "_id": {
+    "$oid": "5eb51abc69c62c46187847ed"
+  },
+  "Id": 10,
+  "Name": "Apps",
+  "values": [
+    "play.google",
+    "apple.com",
+    "Mobile:"
+  ]
+},{
+  "_id": {
+    "$oid": "5eb51ad369c62c46187847ee"
+  },
+  "Id": 35,
+  "Name": "Images",
+  "values": [
+    ".jpg",
+    ".png",
+    ".JPG",
+    ".jpeg"
+  ]
+},{
+  "_id": {
+    "$oid": "5eb5406769c62c46187847f1"
+  },
+  "Id": 15,
+  "Name": "Geographical location",
+  "values": [
+    "Geographical",
+    "Geographic Scope",
+    "Geographic",
+    "WHERE",
+    "Country",
+    "Ubicación",
+    "places",
+    "PROVINCIA:",
+    "País ",
+    "Project Location",
+    "Location"
+  ]
+},{
+  "_id": {
+    "$oid": "5eb5409b69c62c46187847f2"
+  },
+  "Id": 20,
+  "Name": "Status",
+  "values": [
+    "Project Status",
+    "Status",
+    "ESTADO DEL PROYECTO:"
+  ]
+},{
+  "_id": {
+    "$oid": "5eb540cc69c62c46187847f3"
+  },
+  "Id": 18,
+  "Name": "Methodology - Participants tasks",
+  "values": [
+    "Participation Tasks",
+    "Tasks",
+    "Task",
+    "TASK",
+    "TASKS",
+    "HOW TO GET STARTED",
+    "RELACIÓN CON LA CIENCIA CIUDADANA:",
+    "¿Cómo participan los voluntarios/as?"
+  ]
+},{
+  "_id": {
+    "$oid": "5eb540e469c62c46187847f4"
+  },
+  "Id": 21,
+  "Name": "Start Date",
+  "values": [
+    "Start Date",
+    "FECHA DE INICIO DEL PROYECTO:",
+    "INICIO DEL PROYECTO:",
+    "INICIO:",
+    "INICIO DE LOS PROYECTOS:",
+    "Projektstart:"
+  ]
+},{
+  "_id": {
+    "$oid": "5eb5411f69c62c46187847f5"
+  },
+  "Id": 31,
+  "Name": "public / private investment",
+  "values": [
+    "Sponsor",
+    "TOTAL EXPENSE",
+    "Project Funding"
+  ]
+},{
+  "_id": {
+    "$oid": "5eb5415169c62c46187847f6"
+  },
+  "Id": 12,
+  "Name": "Project topic (Knowledge area)",
+  "values": [
+    "Fields of Science",
+    "TOPICS",
+    "ÁREA DE CONOCIMIENTO:",
+    "ÁREAS DE CONOCIMIENTO:"
+  ]
+},{
+  "_id": {
+    "$oid": "5eb5418269c62c46187847f7"
+  },
+  "Id": 23,
+  "Name": "Development time",
+  "values": [
+    "Intended Outcomes",
+    "IDEAL FREQUENCY",
+    "When? ",
+    "Période : "
+  ]
+},{
+  "_id": {
+    "$oid": "5eb91f4769c62c46187847f8"
+  },
+  "Id": 4,
+  "Name": "MAin objectives",
+  "values": [
+    "GOAL",
+    "Goal",
+    "Waarom doe je mee?",
+    "Objet : "
+  ]
+},{
+  "_id": {
+    "$oid": "5eb9225b69c62c46187847f9"
+  },
+  "Id": 26,
+  "Name": "Member's age",
+  "values": [
+    "IDEAL AGE GROUP"
+  ]
+},{
+  "_id": {
+    "$oid": "5eb9230069c62c46187847fa"
+  },
+  "Id": 36,
+  "Name": "Development place",
+  "values": [
+    "SPEND THE TIME",
+    "Region",
+    "Ubicación",
+    "ÁMBITO DE ACTUACIÓN:",
+    "Type of activity:"
+  ]
+},{
+  "_id": {
+    "$oid": "5eb924a069c62c46187847fb"
+  },
+  "Id": 37,
+  "Name": "Dedication time",
+  "values": [
+    "AVERAGE TIME",
+    "How long will it take? "
+  ]
+},{
+  "_id": {
+    "$oid": "5eb9267869c62c46187847fd"
+  },
+  "Id": 39,
+  "Name": "Update date",
+  "values": [
+    "PROJECT UPDATED"
+  ]
+},{
+  "_id": {
+    "$oid": "5eb94b5e69c62c46187847fe"
+  },
+  "Id": 27,
+  "Name": "Main programe or person in charge",
+  "values": [
+    "PRESENTED BY",
+    "Wie organiseert het?",
+    "/researcher/",
+    "Creado por:",
+    "Administradores de proyecto:",
+    "Administrador de proyecto:",
+    "MIEMBROS DEL EQUIPO:",
+    "OTROS GRUPOS O INSTITUCIONES COLABORADORES:",
+    "OTRAS PERSONAS O ENTIDADES COLABORADORAS:",
+    "ENTIDADES COLABORADORAS:",
+    "OTRAS ENTIDADES COLABORADORAS:",
+    "GRUPOS O ENTIDADES COLABORADORAS",
+    "OTRAS PERSONAS EN EL PROYECTO:",
+    "Project Manager",
+    "Project Co-ordinator",
+    "Kontakt:"
+  ]
+},{
+  "_id": {
+    "$oid": "5ecce1c4c145ed0d20be478b"
+  },
+  "Id": 29,
+  "Name": "Participants profile",
+  "values": [
+    "Wie kan meedoen?",
+    "Usuarios",
+    "/people/",
+    "PÚBLICO AL QUE SE DIRIGE EL PROYECTO:",
+    "INTEGRANTES DEL PROYECTO:",
+    "INTEGRANTES:",
+    "Who can take part?",
+    "Public : ",
+    "Project Partners",
+    "Users"
+  ]
+},{
+  "_id": {
+    "$oid": "5ed8ad856459e241740b81f0"
+  },
+  "Id": 19,
+  "Name": "Tools and materials",
+  "values": [
+    "Tipo de medios"
+  ]
+},{
+  "_id": {
+    "$oid": "5f186e26477ffb479014d0e2"
+  },
+  "Id": 22,
+  "Name": "End date",
+  "values": [
+    "FECHA DE FINALIZACIÓN DEL PROYECTO:",
+    "FINALIZACIÓN DEL PROYECTO:",
+    "FINALIZACIÓN:",
+    "FINALIZACIÓN DE LOS PROYECTOS:"
+  ]
+},{
+  "_id": {
+    "$oid": "5f186e67477ffb479014d0e3"
+  },
+  "Id": 24,
+  "Name": "Number of members",
+  "values": [
+    "PÚBLICO ALCANZADO:"
+  ]
+},{
+  "_id": {
+    "$oid": "5f186ea3477ffb479014d0e4"
+  },
+  "Id": 5,
+  "Name": "Website link",
+  "values": [
+    "PÁGINA WEB DEL PROYECTO:"
+  ]
+}]

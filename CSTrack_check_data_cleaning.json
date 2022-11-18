@@ -1,0 +1,426 @@
+[{
+  "_id": {
+    "$oid": "5eda16d404dcda74e4b73f09"
+  },
+  "Name": "This collection contains all the information needed to develop data cleaning"
+},{
+  "_id": {
+    "$oid": "5eda16e904dcda74e4b73f0a"
+  },
+  "Id": 1,
+  "Name": "Number of projects links to platforms loaded in previous execution",
+  "List": [
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {}
+  ]
+},{
+  "_id": {
+    "$oid": "5ee8a97b7ba3626b78b620c8"
+  },
+  "Id": 2,
+  "Name": "Number of projects of each platforms loaded in previous execution",
+  "List": [
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {}
+  ]
+},{
+  "_id": {
+    "$oid": "5f02e2034c03bd16d84012a3"
+  },
+  "Id": 3,
+  "Name": "Scistarter topics, Age group & Development time",
+  "Topics": [
+    {
+      "Url": "Information of the URl topic",
+      "Description": "Topic description"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=1",
+      "Description": "Social Science"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=2",
+      "Description": "Geography"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=3",
+      "Description": "Agriculture"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=4",
+      "Description": "Events"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=5",
+      "Description": "Psychology"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=6",
+      "Description": "Transportation"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=7",
+      "Description": "Crowd Funding"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=8",
+      "Description": "Physics"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=9",
+      "Description": "Ecology & Environment"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=10",
+      "Description": "Chemistry"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=11",
+      "Description": "Birds"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=12",
+      "Description": "Biology"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=13",
+      "Description": "Astronomy & Space"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=14",
+      "Description": "Ocean, Water, Marine & Terrestrial"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=15",
+      "Description": "Archeology & Cultural"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=16",
+      "Description": "Insects & Pollinators"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=17",
+      "Description": "Sound"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=18",
+      "Description": "Computers & Technology"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=19",
+      "Description": "Geology & Earth Science"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=20",
+      "Description": "Animals"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=21",
+      "Description": "Nature & Outdoors"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=22",
+      "Description": "Awards"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=23",
+      "Description": "Health & Medicine"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=24",
+      "Description": "Education"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=25",
+      "Description": "Food"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=26",
+      "Description": "Science Policy"
+    },
+    {
+      "Url": "https://scistarter.org/finder?topic=27",
+      "Description": "Climate & Weather"
+    }
+  ],
+  "Age group": [
+    {
+      "Url": "Information of the Age group Url",
+      "Description": "Age group description"
+    },
+    {
+      "Url": "https://scistarter.org/finder?audience=111",
+      "Description": "Elementary school (6-10 years)"
+    },
+    {
+      "Url": "https://scistarter.org/finder?audience=112",
+      "Description": "Middle school (11-13 years)"
+    },
+    {
+      "Url": "https://scistarter.org/finder?audience=113",
+      "Description": "High school (14-17 years)"
+    },
+    {
+      "Url": "https://scistarter.org/finder?audience=114",
+      "Description": "College"
+    },
+    {
+      "Url": "https://scistarter.org/finder?audience=115",
+      "Description": "Graduate students"
+    },
+    {
+      "Url": "https://scistarter.org/finder?audience=116",
+      "Description": "Adults"
+    },
+    {
+      "Url": "https://scistarter.org/finder?audience=117",
+      "Description": "Families"
+    },
+    {
+      "Url": "https://scistarter.org/finder?audience=118",
+      "Description": "Seniors"
+    }
+  ],
+  "Development time": [
+    {
+      "Url": "Information of the URl development time",
+      "Description": "Development time description"
+    },
+    {
+      "Url": "https://scistarter.org/finder?activity=28",
+      "Description": "On a lunch break"
+    },
+    {
+      "Url": "https://scistarter.org/finder?activity=29",
+      "Description": "At sport stadiums"
+    },
+    {
+      "Url": "https://scistarter.org/finder?activity=30",
+      "Description": "At night"
+    },
+    {
+      "Url": "https://scistarter.org/finder?activity=31",
+      "Description": "At a scicence center, zoo or aquarium"
+    },
+    {
+      "Url": "https://scistarter.org/finder?activity=32",
+      "Description": "At school"
+    },
+    {
+      "Url": "https://scistarter.org/finder?activity=33",
+      "Description": "On a walk, run"
+    },
+    {
+      "Url": "https://scistarter.org/finder?activity=34",
+      "Description": "Exclusively online"
+    },
+    {
+      "Url": "https://scistarter.org/finder?activity=35",
+      "Description": "At the beach"
+    },
+    {
+      "Url": "https://scistarter.org/finder?activity=36",
+      "Description": "In snow or rain"
+    },
+    {
+      "Url": "https://scistarter.org/finder?activity=37",
+      "Description": "At home"
+    },
+    {
+      "Url": "https://scistarter.org/finder?activity=38",
+      "Description": "In the car"
+    },
+    {
+      "Url": "https://scistarter.org/finder?activity=39",
+      "Description": "Emergency response"
+    },
+    {
+      "Url": "https://scistarter.org/finder?activity=40",
+      "Description": "On a hike"
+    },
+    {
+      "Url": "https://scistarter.org/finder?activity=41",
+      "Description": "While fishing"
+    },
+    {
+      "Url": "https://scistarter.org/finder?activity=42",
+      "Description": "In oceans, streams, rivers, lakes"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "5f3ced181cd88f486c77cb78"
+  },
+  "Id": 4,
+  "Name": "Language",
+  "Languages": {
+    "ar": "Arabic",
+    "af": "Afrikaans",
+    "bg": "Bulgarian",
+    "bn": "Bengali",
+    "ca": "Catalan",
+    "cs": "Czech",
+    "cy": "Welsh",
+    "da": "Danish",
+    "en": "English",
+    "et": "Estonian",
+    "gu": "Gujarati",
+    "fi": "Finnish",
+    "fr": "French",
+    "de": "German",
+    "el": "Greek",
+    "he": "Hebrew",
+    "hi": "Hindi",
+    "hu": "Hungarian",
+    "hr": "Croatian",
+    "id": "Indonesian",
+    "it": "Italian",
+    "ja": "Japanese",
+    "kn": "Kannada",
+    "ko": "Korean",
+    "lv": "Latvian",
+    "lt": "Lithuanian",
+    "mk": "Macedonian",
+    "ml": "Malayalam",
+    "mr": "Marathi",
+    "ne": "Nepali",
+    "nl": "Dutch",
+    "no": "Norwegian",
+    "fa": "Persian",
+    "pa": "Punjabi, Panjabi",
+    "pl": "Polish",
+    "pt": "Portuguese",
+    "ro": "Romanian",
+    "ru": "Russian",
+    "sk": "Slovak",
+    "sa": "Sanskrit",
+    "sl": "Slovenian",
+    "so": "Somali",
+    "sq": "Albanian",
+    "es": "Spanish",
+    "sv": "Swedish",
+    "sw": "Swahili",
+    "ta": "Tamil",
+    "te": "Telugu",
+    "th": "Thai",
+    "tl": "Tagalog",
+    "tr": "Turkish",
+    "uk": "Ukrainian",
+    "ur": "Urdu",
+    "vi": "Vietnamese",
+    "zh-cn": "Chinese",
+    "zh-tw": "Chinese"
+  }
+},{
+  "_id": {
+    "$oid": "5fb567c68bd54b0020e51c23"
+  },
+  "Id": 5,
+  "Name": "eos platform topics descriptor",
+  "List": {
+    "221": "Natuur",
+    "223": "Historisch",
+    "271": "Gezondheid",
+    "375": "Psychologie",
+    "381": "Cultuur",
+    "843": "Technologie",
+    "880": "Heelal",
+    "1075": "Onderzoek"
+  }
+}]
