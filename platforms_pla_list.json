@@ -1,0 +1,1683 @@
+[{
+  "_id": {
+    "$oid": "5e81f88d83f0bdb1fe79047b"
+  },
+  "Id": 9,
+  "Name": "Österreich forscht",
+  "Url": "https://www.citizen-science.at/projekte",
+  "annexed": "https://www.citizen-science.at",
+  "check": "/projekte/",
+  "className": "",
+  "buttonName": "",
+  "Country": "AUT",
+  "ProjClassName": "itemBody",
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "CS platform",
+  "Wp2 Id": 9,
+  "Language": "German",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5e81f8b153371812fa918c24"
+  },
+  "Id": 9,
+  "Name": "Österreich forscht",
+  "Url": "https://www.citizen-science.at/projekte/projektarchiv",
+  "annexed": "https://www.citizen-science.at",
+  "check": "/projekte/projektarchiv/",
+  "className": "",
+  "buttonName": "",
+  "Country": "AUT",
+  "ProjClassName": "itemBody",
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "CS platform",
+  "Wp2 Id": 9,
+  "Language": "German",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5e81fe916e62f30f23c368d1"
+  },
+  "Id": 10,
+  "Name": "Schweiz forscht",
+  "Url": "https://www.schweiz-forscht.ch/de/citizen-science-projekte",
+  "annexed": "https://www.schweiz-forscht.ch",
+  "check": "/item/",
+  "className": "",
+  "buttonName": "",
+  "Country": "CHE",
+  "ProjClassName": "main",
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "CS platform",
+  "Wp2 Id": 10,
+  "Language": "German",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5e81fecbb33bddfc7c180df8"
+  },
+  "Id": 12,
+  "Name": "Zentrum für Citizen Science",
+  "Url": "https://www.zentrumfuercitizenscience.at/en/projects",
+  "annexed": "https://www.zentrumfuercitizenscience.at/",
+  "check": "en/p/",
+  "className": "",
+  "buttonName": "",
+  "Country": "AUT",
+  "ProjClassName": "layout_full",
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "CS platform",
+  "Wp2 Id": 12,
+  "Language": "English",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5e81ff1935e1804029a4bc62"
+  },
+  "Id": 11,
+  "Name": "USA Citizen science platform",
+  "Url": "https://www.citizenscience.gov/catalog/#",
+  "annexed": "https://www.citizenscience.gov",
+  "check": "/catalog/",
+  "className": "",
+  "buttonName": "",
+  "Country": "USA",
+  "ProjClassName": "entry-container",
+  "Load": "no",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "CS platform",
+  "Wp2 Id": 11,
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5e81ff6cc1a1b9cfc038801b"
+  },
+  "Id": 67,
+  "Name": "Citizen Science Vlaanderen",
+  "Url": "https://www.scivil.be/en/projects",
+  "annexed": "https://www.scivil.be",
+  "check": "/en/project/",
+  "className": "",
+  "buttonName": "//a[@rel=\"next\"]",
+  "Country": "BEL",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "CS platform",
+  "Wp2 Id": 1,
+  "Language": "English",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5e830cc35ce542c7b247989d"
+  },
+  "Id": 180,
+  "Name": "Citizen Science DK",
+  "Url": "https://citizenscience.dk/portfolio/",
+  "annexed": "",
+  "check": "portfolio",
+  "className": "",
+  "buttonName": "//*[@id=\"infinite-handle\"]/span",
+  "Country": "DNK",
+  "ProjClassName": "content-area",
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "CS platform",
+  "Wp2 Id": 2,
+  "Language": "Danish",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5e8315d0ddf3c7f43070f207"
+  },
+  "Id": 65,
+  "Name": "Scistarter",
+  "Url": "https://scistarter.org/finder",
+  "annexed": "",
+  "check": "",
+  "className": "flex-grid",
+  "buttonName": "//*[@id=\"search-results\"]/div[2]/div/button[2]",
+  "Country": "USA",
+  "ProjClassName": "table-project",
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "CS platform",
+  "Wp2 Id": 3,
+  "Language": "English",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5e843a9e3375e882b5f8e137"
+  },
+  "Id": 86,
+  "Name": "Digital Earth Lab",
+  "Url": "https://digitalearthlab.jrc.ec.europa.eu/csp/topics",
+  "annexed": "",
+  "check": "topics",
+  "className": "view-content",
+  "buttonName": "",
+  "Country": "EU",
+  "ProjClassName": "",
+  "Load": "no",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "Research projects related with CS",
+  "Wp2 Id": 23,
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5e8450a5e579601104f75d16"
+  },
+  "Id": 64,
+  "Name": "Scientific American",
+  "Url": "https://www.scientificamerican.com/citizen-science/",
+  "annexed": "",
+  "check": "citizen-science",
+  "className": "",
+  "buttonName": "//*[@id=\"sa_body\"]/div[2]/section/div[3]/footer/div[3]/a",
+  "Country": "USA",
+  "ProjClassName": "",
+  "Load": "no",
+  "Platform load": "",
+  "Projects load": "",
+  "Type": "",
+  "Wp2 Id": 26,
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5e845c54b910aacab9cb1037"
+  },
+  "Id": 98,
+  "Name": "Erasmus+ project results",
+  "Url": "https://ec.europa.eu/programmes/erasmus-plus/projects/?pk_kwd=180150#search/project/keyword=citizen%20science&matchAllCountries=false",
+  "annexed": "https://ec.europa.eu",
+  "check": "/programmes/erasmus-plus/projects/",
+  "className": "",
+  "buttonName": "//a[contains(text(), \"Next\")][1]",
+  "Country": "EU",
+  "ProjClassName": "",
+  "Load": "no",
+  "Platform load": "",
+  "Projects load": "",
+  "Type": "Research projects related with CS",
+  "Wp2 Id": 24,
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5e846ae57f7b96b7e93f13b9"
+  },
+  "Id": 109,
+  "Name": "CORDIS",
+  "Url": "https://cordis.europa.eu/search/en?q=%27citizen%20science%27%20AND%20(contenttype%3D%27project%27%20OR%20%2Farticle%2Frelations%2Fcategories%2Fcollection%2Fcode%3D%27brief%27%20OR%20%2Fresult%2Frelations%2Fcategories%2Fcollection%2Fcode%3D%27pubsum%27,%27deliverable%27,%27publication%27)&p=1&num=10&srt=Relevance:decreasing",
+  "annexed": "",
+  "check": "project",
+  "className": "search-content-padding",
+  "buttonName": "//*[@id=\"search-container\"]/div/div[2]/div[2]/cordis-search-content/div[4]/cordis-search-results-container/div[2]/p-paginator/div/a[3]",
+  "Country": "EU",
+  "ProjClassName": "",
+  "Load": "no",
+  "Platform load": "",
+  "Projects load": "",
+  "Type": "Research projects related with CS",
+  "Wp2 Id": 25,
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5e848e099ce92bf36c5536e8"
+  },
+  "Id": 124,
+  "Name": "Natural History Museum UK",
+  "Url": "https://www.nhm.ac.uk/take-part/citizen-science.html",
+  "annexed": "",
+  "check": "/take-part/citizen-science",
+  "className": "",
+  "buttonName": "",
+  "Country": "UK",
+  "ProjClassName": "main-section",
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "Museums (providing list of CS projects)",
+  "Wp2 Id": 27,
+  "Language": "English",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5e84da5e4ff483d34617503c"
+  },
+  "Id": 81,
+  "Name": "North Carolina Museum of Natural sciences",
+  "Url": "https://naturalsciences.org/research-collections/citizen-science/current-projects",
+  "annexed": "",
+  "check": "://",
+  "className": "col-sm-9.col-xs-12.col-sm-push-3",
+  "buttonName": "",
+  "Country": "USA",
+  "ProjClassName": "",
+  "Load": "no",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "Museums (providing list of CS projects)",
+  "Wp2 Id": 28,
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5e84daa776a60213bf97ab92"
+  },
+  "Id": 184,
+  "Name": "Idereen Wetenschapper",
+  "Url": "https://www.iedereenwetenschapper.be/",
+  "annexed": "",
+  "check": "projects",
+  "className": "column",
+  "buttonName": "",
+  "Country": "BEL",
+  "ProjClassName": "column",
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "CS platform",
+  "Wp2 Id": 4,
+  "Language": "English",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5e8ae2820860f8e2f623ee20"
+  },
+  "Id": 111,
+  "Name": "inaturalista network",
+  "Url": "https://www.inaturalist.org/projects/browse",
+  "annexed": "https://www.inaturalist.org",
+  "check": "/projects/",
+  "className": "",
+  "buttonName": "//a[@class=\"next_page\"]",
+  "Country": "World wide",
+  "ProjClassName": [
+    ""
+  ],
+  "Load": "yes",
+  "Platform load": "N/A",
+  "Projects load": "API",
+  "Type": "CS platform",
+  "Wp2 Id": 5,
+  "Language": "Multiple",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5e8ae6e39a8f37ef9cf3c7c0"
+  },
+  "Id": 128,
+  "Name": "Earthwatch",
+  "Url": "https://earthwatch.org.uk/get-involved",
+  "annexed": "https://earthwatch.org.uk",
+  "check": "/get-involved/",
+  "className": "",
+  "buttonName": "",
+  "Country": "UK",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "Specific CS Associations/Charity/Institutions (universities, governments...)",
+  "Wp2 Id": 16,
+  "Language": "English",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5e8ae6f7cd10883ee40f9b2a"
+  },
+  "Id": 128,
+  "Name": "Earthwatch",
+  "Url": "https://earthwatch.org.uk/our-science/research-topics-and-projects/past-projects",
+  "annexed": "https://earthwatch.org.uk",
+  "check": "/get-involved/",
+  "className": "",
+  "buttonName": "",
+  "Country": "UK",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "Specific CS Associations/Charity/Institutions (universities, governments...)",
+  "Wp2 Id": 16,
+  "Language": "English",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5e8ae702e237c3761059e96d"
+  },
+  "Id": 128,
+  "Name": "Earthwatch",
+  "Url": "https://earthwatch.org.uk/get-involved/2-uncategorised/25-projects-and-activities",
+  "annexed": "https://earthwatch.org.uk",
+  "check": "/get-involved/",
+  "className": "",
+  "buttonName": "",
+  "Country": "UK",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "Specific CS Associations/Charity/Institutions (universities, governments...)",
+  "Wp2 Id": 16,
+  "Language": "English",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5e8aef9898475e6ed3ca6a1d"
+  },
+  "Id": 134,
+  "Name": "University of Dundee: Leverhulme Research Centre for Forensic Science",
+  "Url": "https://www.dundee.ac.uk/leverhulme/citizenscience/",
+  "annexed": "",
+  "check": "",
+  "className": "content",
+  "buttonName": "",
+  "Country": "UK",
+  "ProjClassName": "content",
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "Specific CS Associations/Charity/Institutions (universities, governments...)",
+  "Wp2 Id": 15,
+  "Language": "English",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5e8b13128becc417fd8299a4"
+  },
+  "Id": 174,
+  "Name": "Ciencia Ciudadana Espana",
+  "Url": "https://ciencia-ciudadana.es/proyecto-cc/",
+  "annexed": "",
+  "check": "/project/",
+  "className": "",
+  "buttonName": "",
+  "Country": "ES",
+  "ProjClassName": "post-wrap",
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "CS platform",
+  "Wp2 Id": 6,
+  "Language": "Spanish",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5e8b2385bf198d95e8d4606e"
+  },
+  "Id": 144,
+  "Name": "Critical Ecosystem Partnership Fund",
+  "Url": "https://www.cepf.net/grants/grantee-projects",
+  "annexed": "",
+  "check": "/grants/grantee-projects/",
+  "className": "",
+  "buttonName": "/html/body/div[1]/div/div/div/div[2]/div[3]/div/ul/li/a",
+  "Country": "World wide",
+  "ProjClassName": "",
+  "Load": "no",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "Specific CS Associations/Charity/Institutions (universities, governments...)",
+  "Wp2 Id": 18,
+  "Language": "English",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5e8b32391159471a7179122a"
+  },
+  "Id": 147,
+  "Name": "Conservation Leadership Programme",
+  "Url": "http://www.conservationleadershipprogramme.org/our-projects/supported-projects/",
+  "annexed": "",
+  "check": "/project/",
+  "className": "",
+  "buttonName": "//div[@class=\"wp-pagenavi\"]/a[@class=\"nextpostslink\"]",
+  "Country": "World wide",
+  "ProjClassName": "",
+  "Load": "no",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "Specific CS Associations/Charity/Institutions (universities, governments...)",
+  "Wp2 Id": 19,
+  "Language": "English",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5e8b3d9225a1521562d8e591"
+  },
+  "Id": 193,
+  "Name": "Australian Citizen Science Project Finder",
+  "Url": "https://biocollect.ala.org.au/acsa#isCitizenScience%3Dtrue%26isWorldWide%3Dfalse%26max%3D20%26sort%3DdateCreatedSort",
+  "annexed": "https://biocollect.ala.org.au",
+  "check": "/project/",
+  "className": "",
+  "buttonName": "//a[@href=\"javascript:pago.nextPage();\"]",
+  "Country": "AUS",
+  "ProjClassName": "pill-content",
+  "Load": "no",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "CS platform",
+  "Wp2 Id": 8,
+  "Language": "",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5e8d921b5c0e81502c47e693"
+  },
+  "Id": 173,
+  "Name": "Ciencia Ciudadana Chile",
+  "Url": "http://cienciaciudadana.cl/proyectos/",
+  "annexed": "",
+  "check": "/project/",
+  "className": "",
+  "buttonName": "",
+  "Country": "CL",
+  "ProjClassName": "",
+  "Load": "no",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "CS platform",
+  "Wp2 Id": 7,
+  "Language": "",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5e8d9bccc4d37b0ced64592a"
+  },
+  "Id": 176,
+  "Name": "Citizen Science Competitive Funding Program",
+  "Url": "https://www.fs.usda.gov/working-with-us/citizen-science/projects",
+  "annexed": "",
+  "check": "",
+  "className": "view-content",
+  "buttonName": "",
+  "Country": "USA",
+  "ProjClassName": "",
+  "Load": "no",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "Museums (providing list of CS projects)",
+  "Wp2 Id": 29,
+  "Language": "",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5e8d9de3de958e622d661335"
+  },
+  "Id": 175,
+  "Name": "Cientópolis",
+  "Url": "https://www.cientopolis.org/participar/#proyectos",
+  "annexed": "",
+  "check": "/portfolio/",
+  "className": "-items ",
+  "buttonName": "",
+  "Country": "ARG",
+  "ProjClassName": "",
+  "Load": "no",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "CS platform",
+  "Wp2 Id": 14,
+  "Language": "",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5e8edec7645f338ae14c50aa"
+  },
+  "Id": 189,
+  "Name": "Ciência Cidadã",
+  "Url": "https://www.sibbr.gov.br/cienciacidada/projetos.html",
+  "annexed": "",
+  "check": "",
+  "className": "col-md-12",
+  "buttonName": "",
+  "Country": "BRA",
+  "ProjClassName": "",
+  "Load": "no",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "Specific CS Associations/Charity/Institutions (universities, governments...)",
+  "Wp2 Id": 20,
+  "Language": "",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5e8ee2b12f10c2fab0bd231b"
+  },
+  "Id": 195,
+  "Name": "Participatory Science Platform",
+  "Url": "https://www.curiousminds.nz/projects/?fund=participatory-science-platform&start=0",
+  "annexed": "",
+  "check": "/projects/",
+  "className": "l-ajax-js",
+  "buttonName": "//a[@class=\"next\"]",
+  "Country": "NZL",
+  "ProjClassName": "",
+  "Load": "no",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "Specific CS Associations/Charity/Institutions (universities, governments...)",
+  "Wp2 Id": 22,
+  "Language": "",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5e8f2524cf71f1e57f3b1e59"
+  },
+  "Id": 211,
+  "Name": "Science Cite",
+  "Url": "https://www.science-et-cite.ch/de/home/projekte/projekte-national-und-deutschschweiz?limit=20&tag_list_language_filter=de-DE&types[0]=1&start=0",
+  "annexed": "https://www.science-et-cite.ch",
+  "check": "/de/",
+  "className": "",
+  "buttonName": "//*[@id=\"content\"]/div[3]/ul/li[6]/a",
+  "Country": "DEU",
+  "ProjClassName": "item-page-projekte",
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "Specific CS Associations/Charity/Institutions (universities, governments...)",
+  "Wp2 Id": 21,
+  "Language": "German",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5ee0933dcde23f497206f5a7"
+  },
+  "Id": 13,
+  "Name": "Zooniverse",
+  "Url": "https://www.zooniverse.org/projects",
+  "annexed": "",
+  "check": "",
+  "className": "project-card-list",
+  "buttonName": "",
+  "Country": "World wide",
+  "ProjClassName": [
+    "project-home-page",
+    "columns-container"
+  ],
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "CS platform",
+  "Wp2 Id": 13,
+  "Language": "English",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5ee0b5ee8e1fb279f6d7591a"
+  },
+  "Id": 30,
+  "Name": "Observations.be",
+  "Url": "https://observations.be/projects/",
+  "annexed": "",
+  "check": "/projects/",
+  "className": "app-content-section",
+  "buttonName": "",
+  "Country": "BEL",
+  "ProjClassName": "table",
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "CS platform",
+  "Wp2 Id": 30,
+  "Language": "Dutch",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5ee0bc5eaa967ae6c0982bd3"
+  },
+  "Id": 31,
+  "Name": "Bürger schaffen Wissen",
+  "Url": "https://www.buergerschaffenwissen.de/projekte",
+  "annexed": "https://www.buergerschaffenwissen.de/",
+  "check": "/projekt/",
+  "className": "",
+  "buttonName": "",
+  "Country": "DEU",
+  "ProjClassName": "",
+  "Load": "no",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "CS platform",
+  "Wp2 Id": 31,
+  "Language": "German",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5ee0d8d338210d2dacd07e0f"
+  },
+  "Id": 32,
+  "Name": "Citizen Science Germany",
+  "Url": "http://www.citizen-science-germany.de/citizen_science_germany_projekte.html",
+  "annexed": "http://www.citizen-science-germany.de/",
+  "check": "citizen_science_germany_projekte",
+  "className": "",
+  "buttonName": "",
+  "Country": "DEU",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "CS platform",
+  "Wp2 Id": 32,
+  "Language": "German",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5ee0db6510f6f2a08dcb572a"
+  },
+  "Id": 33,
+  "Name": "citizen science working group",
+  "Url": "https://www.uni-muenster.de/AFO/CS/cs_mitforschen.html",
+  "annexed": "https://www.uni-muenster.de",
+  "check": "/mitforschen/",
+  "className": "",
+  "buttonName": "",
+  "Country": "DEU",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "CS platform",
+  "Wp2 Id": 33,
+  "Language": "German",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5ee0e5bd69b22a6641c02337"
+  },
+  "Id": 35,
+  "Name": "Jagis pour la nature",
+  "Url": "http://www.vigienature.fr/fr",
+  "annexed": "http://www.vigienature.fr",
+  "check": "/fr/",
+  "className": "",
+  "buttonName": "",
+  "Country": "FR",
+  "ProjClassName": "region-container",
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "CS platform",
+  "Wp2 Id": 35,
+  "Language": "French",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5f2196b49900a5c219c96de1"
+  },
+  "Id": 37,
+  "Name": "Observatoires Participatives des Espèces et de la nature",
+  "Url": "https://www.open-sciences-participatives.org/ecosysteme-sciences-participatives/",
+  "annexed": "",
+  "check": "",
+  "className": "list-observatoires",
+  "buttonName": "",
+  "Country": "FR",
+  "ProjClassName": [
+    "",
+    "col-md-8"
+  ],
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "CS platform",
+  "Wp2 Id": 37,
+  "Language": "French",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5f21e3f2c6b5cac2d61fe5ec"
+  },
+  "Id": 38,
+  "Name": "Latvian Fund for Nature",
+  "Url": "https://ldf.lv/en/list_of_projects",
+  "annexed": "",
+  "check": "/projects/",
+  "className": "column",
+  "buttonName": "",
+  "Country": "LVA",
+  "ProjClassName": "column",
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "CS platform",
+  "Wp2 Id": 38,
+  "Language": "Latvian",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5f229a596d4542829073d558"
+  },
+  "Id": 34,
+  "Name": "J'agis pour la nature",
+  "Url": "https://www.jagispourlanature.org/",
+  "annexed": "https://www.jagispourlanature.org",
+  "check": "/facons-dagir/",
+  "className": "",
+  "buttonName": "",
+  "Country": "FR",
+  "ProjClassName": "tw-container tw-mx-auto tw-py-16",
+  "Load": "no",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "CS platform",
+  "Wp2 Id": 34,
+  "Language": "French",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5f3d32ad3e7040905200a4e8"
+  },
+  "Id": 60,
+  "Name": "Oficina ciència ciutadana Barcelona",
+  "Url": "https://www.barcelona.cat/barcelonaciencia/es/proyectos-ciencia-ciudadana",
+  "annexed": "",
+  "check": "",
+  "className": "clearfix",
+  "buttonName": "",
+  "Country": "ES",
+  "ProjClassName": "main-content-drupal",
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "CS platform",
+  "Wp2 Id": 60,
+  "Language": "Spanish",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5f3d43418769e9a67a061fc9"
+  },
+  "Id": 62,
+  "Name": "Open Systems",
+  "Url": "http://www.ub.edu/opensystems/projectes/",
+  "annexed": "",
+  "check": "/projectes/",
+  "className": "",
+  "buttonName": "",
+  "Country": "ES",
+  "ProjClassName": [
+    "col_esquerra",
+    "col_dreta"
+  ],
+  "Load": "yes",
+  "Platform load": "Manual",
+  "Projects load": "Manual",
+  "Type": "CS platform",
+  "Wp2 Id": 62,
+  "Language": "English",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5f3e500ef17284dc654c246e"
+  },
+  "Id": 63,
+  "Name": "CREAF",
+  "Url": "http://www.creaf.cat/research/citizen-science",
+  "annexed": "",
+  "check": "",
+  "className": "research-area-projects",
+  "buttonName": "//*[@id=\"projects\"]/div/div[2]/ul/li[3]/a",
+  "Country": "ES",
+  "ProjClassName": [
+    "node-info",
+    "node-aside"
+  ],
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "Biodiversity platform",
+  "Wp2 Id": 63,
+  "Language": "English",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5f3e5b0ff8ccfbd6cb8f20c4"
+  },
+  "Id": 61,
+  "Name": "Desqbre",
+  "Url": "https://fundaciondescubre.es/ciencia-ciudadana/",
+  "annexed": "",
+  "check": "https://fundaciondescubre.es/",
+  "className": "",
+  "buttonName": "",
+  "Country": "ES",
+  "ProjClassName": "white-block",
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "Science platform",
+  "Wp2 Id": 61,
+  "Language": "Spanish",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5f3e9a96ac5d31893d29e124"
+  },
+  "Id": 66,
+  "Name": "Victoria-Gasteiz Ayuntamiento",
+  "Url": "https://www.vitoria-gasteiz.org/wb021/was/contenidoAction.do?idioma=es&uid=u25e08f9d_14a56aaea69__7f88",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "ES",
+  "ProjClassName": "even",
+  "Load": "yes",
+  "Platform load": "Manual",
+  "Projects load": "Automatic",
+  "Type": "City council",
+  "Wp2 Id": 66,
+  "Language": "Spanish",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5f3e9f37ed4dff52a1eb9d0a"
+  },
+  "Id": 36,
+  "Name": "nQuire",
+  "Url": "https://nquire.org.uk/discover",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "UK",
+  "ProjClassName": "container",
+  "Load": "yes",
+  "Platform load": "Manual",
+  "Projects load": "Manual",
+  "Type": "CS platform",
+  "Wp2 Id": 36,
+  "Language": "English",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5f3ea1a6c745f32161482734"
+  },
+  "Id": 40,
+  "Name": "Instant wild",
+  "Url": "https://instantwild.zsl.org/projects",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "World wide",
+  "ProjClassName": [
+    "iw-project-info__head",
+    "iw-read-more",
+    "buffer"
+  ],
+  "Load": "yes",
+  "Platform load": "Manual",
+  "Projects load": "Automatic",
+  "Type": "Biodiversity platform",
+  "Wp2 Id": 40,
+  "Language": "English",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5f43d3251cd88f486c77cbc8"
+  },
+  "Id": 68,
+  "Name": "Parcs de catalunya",
+  "Url": "https://parcs.diba.cat/es/web/conservacio-de-la-biodiversitat/ciencia-ciutadana",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "ES",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Manual",
+  "Projects load": "Manual",
+  "Type": "Public research center",
+  "Wp2 Id": 68,
+  "Language": "Spanish",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5f43df581cd88f486c77cbca"
+  },
+  "Id": 85,
+  "Name": "ICM Divulga",
+  "Url": "http://icmdivulga.icm.csic.es/proyectos-divulgativos/",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "ES",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Manual",
+  "Projects load": "Manual",
+  "Type": "Institute of Marine Sciences",
+  "Wp2 Id": 85,
+  "Language": "Spanish",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5f43e36c1cd88f486c77cbd0"
+  },
+  "Id": 41,
+  "Name": "Cities Health",
+  "Url": "https://citieshealth.eu/get-involved/",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "ES",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Manual",
+  "Projects load": "Manual",
+  "Type": "Science insitute",
+  "Wp2 Id": 41,
+  "Language": "English",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5f43f6101cd88f486c77cbdb"
+  },
+  "Id": 59,
+  "Name": "ZAMG",
+  "Url": "https://www.zamg.ac.at/cms/de/forschung/citizen-science/citizen-science?searchterm=citize",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "AUT",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Manual",
+  "Projects load": "Manual",
+  "Type": "Meteorogy Platforms",
+  "Wp2 Id": 59,
+  "Language": "German",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5f44fb541cd88f486c77cbfe"
+  },
+  "Id": 39,
+  "Name": "Dabas dati",
+  "Url": "https://dabasdati.lv/en/cat/7/?links=en/cat/7/",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "LVA",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Manual",
+  "Projects load": "Manual",
+  "Type": "Biodiversity platform",
+  "Wp2 Id": 39,
+  "Language": "Latvian",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5f452fef1cd88f486c77cc17"
+  },
+  "Id": 42,
+  "Name": "National Geographic",
+  "Url": "https://www.nationalgeographic.org/idea/citizen-science-projects/",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "World wide",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Manual",
+  "Projects load": "Manual",
+  "Type": "Science organization",
+  "Wp2 Id": 42,
+  "Language": "English",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5f455a4c1cd88f486c77cc2d"
+  },
+  "Id": 101,
+  "Name": "Ireland Environmental protection agency",
+  "Url": [
+    "http://www.epa.ie/irelandsenvironment/getinvolved/citizenscience/epacitizenscienceinitiatives/",
+    "http://www.epa.ie/irelandsenvironment/getinvolved/citizenscience/nationalcitizenscienceinitiatives/",
+    "http://www.epa.ie/irelandsenvironment/getinvolved/citizenscience/completedprojects/"
+  ],
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "IRL",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Manual",
+  "Projects load": "Manual",
+  "Type": "Environmental protection agency",
+  "Wp2 Id": 44,
+  "Language": "English",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5f4560181cd88f486c77cc30"
+  },
+  "Id": 105,
+  "Name": "Iteritalia",
+  "Url": "http://www.lteritalia.it/?q=content/citizenscience",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "IT",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Manual",
+  "Projects load": "Manual",
+  "Type": "Ecological research network",
+  "Wp2 Id": 45,
+  "Language": "Italian",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5f45625b1cd88f486c77cc35"
+  },
+  "Id": 178,
+  "Name": "Scotland's environment",
+  "Url": "https://www.environment.gov.scot/get-involved/submit-your-data/citizen-science-portal/",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "UK",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Manual",
+  "Projects load": "Manual",
+  "Type": "Environmental platform",
+  "Wp2 Id": 52,
+  "Language": "English",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5f4628e51cd88f486c77cc59"
+  },
+  "Id": 166,
+  "Name": "Environment Live’s Citizen Science portal",
+  "Url": "https://environmentlive.unep.org/citizen",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "World wide",
+  "ProjClassName": "",
+  "Load": "no",
+  "Platform load": "Manual",
+  "Projects load": "Manual",
+  "Type": "Environmental CS platform",
+  "Wp2 Id": 50,
+  "Language": "English",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5f4669f01cd88f486c77cc73"
+  },
+  "Id": 57,
+  "Name": "Citizen Science within the research institute Leibniz",
+  "Url": "https://www.leibniz-gemeinschaft.de/en/research/citizen-science.html",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "DEU",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Manual",
+  "Projects load": "Manual",
+  "Type": "Research association",
+  "Wp2 Id": 57,
+  "Language": "German",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5f466a3f1cd88f486c77cc74"
+  },
+  "Id": 56,
+  "Name": "Citizen Science within the research institute Helmholtz",
+  "Url": "https://www.helmholtz.de/transfer/wissenstransfer/citizen_science/",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "DEU",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Manual",
+  "Projects load": "Manual",
+  "Type": "Research association",
+  "Wp2 Id": 56,
+  "Language": "German",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5f466afd1cd88f486c77cc75"
+  },
+  "Id": 58,
+  "Name": "ARCS",
+  "Url": "https://medborgarforskning.se/lankar/",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "SWE",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Manual",
+  "Projects load": "Manual",
+  "Type": "CS platform",
+  "Wp2 Id": 58,
+  "Language": "Swedish",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5f48af911cd88f486c77cc8a"
+  },
+  "Id": 166,
+  "Name": "Environment Live’s Citizen Science portal",
+  "Url": "https://environmentlive.unep.org/citizen",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "World wide",
+  "ProjClassName": "",
+  "Load": "no",
+  "Platform load": "Manual",
+  "Projects load": "Manual",
+  "Type": "Environmental CS platform",
+  "Wp2 Id": 50,
+  "Language": "English",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5f4cf0c91cd88f486c77cc8b"
+  },
+  "Id": 13,
+  "Name": "Zooniverse",
+  "Url": "https://www.zooniverse.org/projects?page=1&status=paused",
+  "annexed": "",
+  "check": "",
+  "className": "project-card-list",
+  "buttonName": "",
+  "Country": "World wide",
+  "ProjClassName": [
+    "project-home-page",
+    "columns-container"
+  ],
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "CS platform",
+  "Wp2 Id": 13,
+  "Language": "English",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5f4cf0d71cd88f486c77cc8c"
+  },
+  "Id": 13,
+  "Name": "Zooniverse",
+  "Url": "https://www.zooniverse.org/projects?page=1&status=finished",
+  "annexed": "",
+  "check": "",
+  "className": "project-card-list",
+  "buttonName": "",
+  "Country": "World wide",
+  "ProjClassName": [
+    "project-home-page",
+    "columns-container"
+  ],
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "CS platform",
+  "Wp2 Id": 13,
+  "Language": "English",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5f6342bd12f8dc6f0887daca"
+  },
+  "Id": 123,
+  "Name": "CEH",
+  "Url": "https://www.ceh.ac.uk/citizen-science#poms",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "UK",
+  "ProjClassName": "",
+  "Load": "no",
+  "Platform load": "Manual",
+  "Projects load": "Manual",
+  "Type": "Ecology & Hydrology platform",
+  "Wp2 Id": 48,
+  "Language": "English",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "5ff9983788fca465b811fe17"
+  },
+  "Id": 78,
+  "Name": "Institute of Botany of the Czech Academy of Sciences",
+  "Url": "https://www.ibot.cas.cz/en/public-relations/citizen-science/",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "CZE",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Manual",
+  "Projects load": "Manual",
+  "Type": "Botany platform",
+  "Wp2 Id": 78,
+  "Language": "English",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5ff9991c88fca465b811fe18"
+  },
+  "Id": 79,
+  "Name": "Luonto-Liiton Kevätseuranta",
+  "Url": "http://kevatseuranta.fi/osallistu/",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "FIN",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Manual",
+  "Projects load": "Manual",
+  "Type": "Biodiversity platform",
+  "Wp2 Id": 79,
+  "Language": "Finnish",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5ff9e63d88fca465b811fe19"
+  },
+  "Id": 87,
+  "Name": "BOKU Universität für Bodenkultur Wien",
+  "Url": "https://boku.ac.at/citizen-science/projekte",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "AUT",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Manual",
+  "Projects load": "Manual",
+  "Type": "University",
+  "Wp2 Id": 87,
+  "Language": "German",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "5ffb244d88fca465b811fe2a"
+  },
+  "Id": 84,
+  "Name": "Citizen Science Initiatives Latvia 2020",
+  "Url": "https://data.gov.lv/dati/eng/dataset/citizen-science-initiatives-in-latvia/resource/9925676d-938d-4d33-b9c1-759dfb87ca50",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "LVA",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Manual",
+  "Projects load": "Manual",
+  "Type": "Dataset",
+  "Wp2 Id": 84,
+  "Language": "Latvian",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "600076c304e3db3858e629bf"
+  },
+  "Id": 93,
+  "Name": "Rede Portuguesa de Ciência Cidadã",
+  "Url": "https://www.cienciacidada.pt/index2.php",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "PRT",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Manual",
+  "Projects load": "Manual",
+  "Type": "CS platform",
+  "Wp2 Id": 93,
+  "Language": "Portuguese",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "6009be1797d18d186064968c"
+  },
+  "Id": 17,
+  "Name": "Eu citizen science platform",
+  "Url": "https://eu-citizen.science/projects",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "Europe (EU)",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "N/A",
+  "Projects load": "API",
+  "Type": "CS platform",
+  "Wp2 Id": 17,
+  "Language": "English",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "602fcf6fad11733da0b62849"
+  },
+  "Id": 94,
+  "Name": "Flusurvey",
+  "Url": "https://flusurvey.net/en/",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "UK",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "N/A",
+  "Projects load": "N/A",
+  "Type": "Citizen science platform for specific projects",
+  "Wp2 Id": 94,
+  "Language": "English",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "602fd0a6ad11733da0b6284a"
+  },
+  "Id": 95,
+  "Name": "Track Together",
+  "Url": "https://tracktogether.org/",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "USA",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "N/A",
+  "Projects load": "N/A",
+  "Type": "Citizen science platform for specific projects",
+  "Wp2 Id": 95,
+  "Language": "English",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "603368dd42b15c498cd282cd"
+  },
+  "Id": 96,
+  "Name": "TraceTogether",
+  "Url": "https://www.gov.sg/article/help-speed-up-contact-tracing-with-tracetogether",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "SGP",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "N/A",
+  "Projects load": "N/A",
+  "Type": "Citizen science platform for specific projects",
+  "Wp2 Id": 96,
+  "Language": "English",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "603369ed42b15c498cd282ce"
+  },
+  "Id": 97,
+  "Name": "Operation COVID-19 (OpCovID)",
+  "Url": "https://opcovid.com/about-us",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "CAN",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "N/A",
+  "Projects load": "N/A",
+  "Type": "Citizen science platform for specific projects",
+  "Wp2 Id": 97,
+  "Language": "English",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "60336b3b42b15c498cd282cf"
+  },
+  "Id": 98,
+  "Name": "NHS 111 online",
+  "Url": "https://111.nhs.uk/covid-19",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "UK",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "N/A",
+  "Projects load": "N/A",
+  "Type": "Citizen science platform for specific projects",
+  "Wp2 Id": 98,
+  "Language": "English",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "60336c2d42b15c498cd282d0"
+  },
+  "Id": 99,
+  "Name": "CoronAPP",
+  "Url": "https://www.coronapp.dk/",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "DNK",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "N/A",
+  "Projects load": "N/A",
+  "Type": "Citizen science platform for specific projects",
+  "Wp2 Id": 99,
+  "Language": "Danish",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "60336ece42b15c498cd282d1"
+  },
+  "Id": 100,
+  "Name": "Virus Simulator (COVID-19)",
+  "Url": "https://corona-land.org/",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "DNK",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "N/A",
+  "Projects load": "N/A",
+  "Type": "Citizen science platform for specific projects",
+  "Wp2 Id": 100,
+  "Language": "English",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "60336f8a42b15c498cd282d2"
+  },
+  "Id": 55,
+  "Name": "COVID Symptom Study",
+  "Url": "https://covid.joinzoe.com/",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "UK",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "N/A",
+  "Projects load": "N/A",
+  "Type": "Citizen science platform for specific projects",
+  "Wp2 Id": 55,
+  "Language": "English",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "603370f342b15c498cd282d3"
+  },
+  "Id": 102,
+  "Name": "Daily report on the fight against the corona virus (דיווח יומי למאבק בקורונה)",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "ISR",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "N/A",
+  "Projects load": "N/A",
+  "Type": "Citizen science platform for specific projects",
+  "Wp2 Id": 102,
+  "Language": "Hebrew",
+  "Edu": "no",
+  "Url": "https://coronaisrael.org/"
+},{
+  "_id": {
+    "$oid": "60478f29f22e5915c850bbcf"
+  },
+  "Id": 106,
+  "Name": "ODYSSEA: OPERATING A NETWORK OF INTEGRATED OBSERVATORY SYSTEMS IN THE MEDITERRANEAN SEA",
+  "Url": "http://odysseaplatform.eu/",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "Country": "EU",
+  "ProjClassName": "",
+  "buttonName": "",
+  "Load": "yes",
+  "Platform load": "N/A",
+  "Projects load": "N/A",
+  "Type": "Citizen science platform for specific projects",
+  "Wp2 Id": 106,
+  "Language": "English",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "60940b2c67dc0c56d7b451ba"
+  },
+  "Id": 74,
+  "Name": "Burgerwetenschap",
+  "Url": "https://www.rivm.nl/burgerwetenschap",
+  "annexed": "https://www.rivm.nl/",
+  "check": "/burgerwetenschap/",
+  "className": "",
+  "buttonName": "",
+  "Country": "NLD",
+  "ProjClassName": "col-lg-12",
+  "Load": "yes",
+  "Platform load": "Automatic",
+  "Projects load": "Automatic",
+  "Type": "National Institute for Public Health and the Environment",
+  "Wp2 Id": 74,
+  "Language": "",
+  "Edu": "no"
+},{
+  "_id": {
+    "$oid": "609509c967dc0c56d7b451bb"
+  },
+  "Id": 89,
+  "Name": "Young science AT (OEAD)",
+  "Url": "https://youngscience.at/de/angebote/projekte-zum-mitforschen/mitforschen-von-daheim/",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "AUT",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Manual",
+  "Projects load": "Manual",
+  "Type": "Eduaction association",
+  "Wp2 Id": 89,
+  "Language": "German",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "60af57d055ca9eaae9b8c6ee"
+  },
+  "Id": 107,
+  "Name": "UCL university",
+  "Url": "https://www.ucl.ac.uk/library/research-support/open-science/citizen-science",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "UK",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Manual",
+  "Projects load": "Manual",
+  "Type": "University",
+  "Wp2 Id": 107,
+  "Language": "English",
+  "Edu": "yes"
+},{
+  "_id": {
+    "$oid": "636cdca31f60053270638a03"
+  },
+  "Id": 90,
+  "Name": "Universität innsbruck",
+  "Url": "https://www.uibk.ac.at/projects/citizenscience/",
+  "annexed": "",
+  "check": "",
+  "className": "",
+  "buttonName": "",
+  "Country": "AUT",
+  "ProjClassName": "",
+  "Load": "yes",
+  "Platform load": "Manual",
+  "Projects load": "Manual",
+  "Type": "Specific CS Associations/Charity/Institutions (universities, governments...)",
+  "Wp2 Id": 90,
+  "Language": "German",
+  "Edu": "no"
+}]
