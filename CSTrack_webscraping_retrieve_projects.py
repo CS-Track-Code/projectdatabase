@@ -37,7 +37,7 @@ class ScraperProjects:
 
     def get_driver(self, platform_url, Id):
         #Selenium library read: Chromedriver route
-        route = 'D:/Users/Miriam/Anaconda3/Lib/site-packages/selenium/webdriver/common/chromedriver.exe'
+        route = 'D:/Users/Miriam/Documents/python/web_scrapping/chromedriver/chromedriver.exe'
         
         #Open chrome
         self.driver = webdriver.Chrome(executable_path= route)
@@ -181,7 +181,6 @@ class ScraperProjects:
           
 
         if int(Id) == 193:
-            #¡¡¡¡REVISAR ESTO PORQUE NO HAY MANERA!!!!
             # Tag "div" - description + others
 
             self.get_items(class_name, "h1")
@@ -199,7 +198,6 @@ class ScraperProjects:
                 
   
         elif int(Id) == 17:
-            #¡¡¡¡REVISAR ESTO PORQUE NO HAY MANERA!!!!
             # Tag "p" - description + others
             self.get_items(class_name, "class")
 
@@ -553,7 +551,6 @@ class ScraperProjects:
             self.desc_dict = {}
             self.lista = self.dictionary[0]
              
-            #REVISAR EL APPEND DE LA WEBS SI HAY MAS DE UNO
             for i in range(0, len(self.dictionary)):  #For each value in list moving 2 steps for each loop
                     
             #Get all the lists defined in dictionary
@@ -596,11 +593,10 @@ class ScraperProjects:
         
         #Load projects from one platform by Id or all the projects stored in CSTrack_platforms_projects
         if Id:
-            project_list = self.CSTrack_platforms_projects.find({"Id": int(Id), "load_date": str(date.today())}) 
+            project_list = self.CSTrack_platforms_projects.find({"Id": int(Id), "load_date": str(date.today())}) #str(date.today())
         else:
-            project_list = self.CSTrack_platforms_projects.find({"load_date": str(date.today())})
+            project_list = self.CSTrack_platforms_projects.find({"load_date": str(date.today())}) #str(date.today())
 
-        #CHECK IF WORK
         for x in project_list:
             
             #Project platform Id
@@ -694,4 +690,4 @@ class ScraperProjects:
 if __name__ == "__main__":
     
     scraper = ScraperProjects()
-    scraper.retrieve_projects('74')
+    scraper.retrieve_projects('')

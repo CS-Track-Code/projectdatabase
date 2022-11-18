@@ -9,7 +9,6 @@ class DatacleaningPlatforms:
         #Mongodb connection
         self.conn = MongoClient(connection())
 
-
         #Mongodb database and repository
         db = self.conn.CSTrack
 
@@ -64,7 +63,7 @@ class DatacleaningPlatforms:
         if self.CSTrack_platform_projects.find({ "Url": Url }).count() == 0: 
             if Id == 9:
 
-                if  Url != 'https://www.citizen-science.at/projekte/projektarchiv' and Url != 'https://www.citizen-science.at/projekte/ein-neues-projekt-listen':
+                if  '/projektarchiv' in Url and Url != 'https://www.citizen-science.at/projekte/ein-neues-projekt-listen':
                   
                     #If is a correct value insert
                     self.insert_information(Id, Name, Url, country, wp2_id)

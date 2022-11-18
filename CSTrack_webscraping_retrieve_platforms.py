@@ -34,7 +34,7 @@ class ScraperPlatforms:
 
     def get_driver(self, platform_url, Id):
         #Selenium library read: Chromedriver route
-        route = 'D:/Users/Miriam/Anaconda3/Lib/site-packages/selenium/webdriver/common/chromedriver.exe'
+        route = 'D:/Users/Miriam/Documents/python/web_scrapping/chromedriver/chromedriver.exe'
         
         #Open chrome
         self.driver = webdriver.Chrome(executable_path= route)
@@ -66,7 +66,7 @@ class ScraperPlatforms:
         except:
             self.button = ''
 
-        if Id == 13:
+        if Id == 13: #This ID corresponds to the internal ID defined from the list of websites
             time.sleep(10)
             self.button = self.driver.find_elements_by_tag_name("button") #find button
 
@@ -259,7 +259,7 @@ class ScraperPlatforms:
             list_values = self.collection_pla.find({"Id": Id})
         else:
             list_values = self.collection_pla.find({})
-        
+
         #Go through all values
         for x in list_values:
             #Get all elements from collection  
@@ -285,4 +285,4 @@ class ScraperPlatforms:
 if __name__ == "__main__":
      
     scraper = ScraperPlatforms()
-    scraper.retrieve_platforms (77, '') 
+    scraper.retrieve_platforms (65,'manually' )

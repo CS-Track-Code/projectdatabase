@@ -10,8 +10,8 @@ def connection():
         #connection string
         connection_str = config.CONNECTIONSTR
         #port
-        port = config.PORTDEV #8327 = prod
+        port = config.PORTDEV
         port_prod = config.PORTPROD
 
-        connection =  'mongodb://' + user + ':' + password + '@' + host + ':' + port + connection_str
+        connection =  'mongodb://' + user + ':' + password + '@' + host + ':' + port_prod + connection_str
         return connection
